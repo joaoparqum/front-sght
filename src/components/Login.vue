@@ -68,7 +68,7 @@
     message.loading({ content: 'Fazendo o login no sistema...' });
     if (success) {
       setTimeout(() => {
-        router.push('/TelaDocumentos');
+        router.push('/TelaSolicitacao');
       }, 2000);
       console.log('Login realizado com sucesso!');
     }
