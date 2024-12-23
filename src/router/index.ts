@@ -1,8 +1,10 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import App from '../App.vue';
+import HomeScreen from '../components/HomeScreen.vue';
+import TelaCriaUsuario from '../components/TelaCriaUsuario.vue';
 
 const routes = [
-    { path: '/', component: App },
+    { path: '/', component: HomeScreen },
+    { path: '/CriaUsuario', component: TelaCriaUsuario}
 ];
   
 const router = createRouter({

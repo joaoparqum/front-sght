@@ -17,9 +17,13 @@ declare module 'vue' {
     ALayoutContent: typeof import('ant-design-vue/es')['LayoutContent']
     ALayoutFooter: typeof import('ant-design-vue/es')['LayoutFooter']
     ALayoutHeader: typeof import('ant-design-vue/es')['LayoutHeader']
+    ASelect: typeof import('ant-design-vue/es')['Select']
+    FormCriaUsuario: typeof import('./src/components/FormCriaUsuario.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    HomeScreen: typeof import('./src/components/HomeScreen.vue')['default']
     Login: typeof import('./src/components/Login.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TelaCriaUsuario: typeof import('./src/components/TelaCriaUsuario.vue')['default']
   }
 }
