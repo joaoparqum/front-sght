@@ -26,7 +26,7 @@ declare module 'vue' {
     ATag: typeof import('ant-design-vue/es')['Tag']
     FormCriaSolicitacao: typeof import('./src/components/FormCriaSolicitacao.vue')['default']
     FormCriaUsuario: typeof import('./src/components/FormCriaUsuario.vue')['default']
-    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    Home: typeof import('./src/components/Home.vue')['default']
     HomeScreen: typeof import('./src/components/HomeScreen.vue')['default']
     Login: typeof import('./src/components/Login.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']

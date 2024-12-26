@@ -51,24 +51,21 @@
             <a-button 
               type="primary" 
               size="small" 
-              @click="editarSolicitacao(record.id)"
-              class="visualizer-button"
+              @click=""
+              class="aproved-button"
             >
-              <EditOutlined />
-              Editar
+              Aprovar
             </a-button>
-            <span v-if="isAdmin">
-              <a-divider type="vertical" />
+            <a-divider type="vertical" />
               <a-button 
                 type="primary" 
                 size="small" 
-                @click="deleteSolicitacao(record.id)"
-                class="delete-button"
+                @click=""
+                class="rejected-button"
               >
-                <DeleteOutlined />
-                Deletar
+                Rejeitar
               </a-button>
-            </span>
+            
           </template>
         </template>
       </a-table>
@@ -80,7 +77,7 @@
     import { useStore } from 'vuex';
     import { useRouter } from 'vue-router';
     import { message } from 'ant-design-vue';
-    import { DeleteOutlined, FileAddOutlined, UserAddOutlined, EditOutlined } from '@ant-design/icons-vue';
+    import { FileAddOutlined, UserAddOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons-vue';
     
     // Router e Store
     const router = useRouter();
@@ -205,11 +202,16 @@
   
 <style scoped>
     .table-container {
-        padding: 0 20px;
+        padding: 0 10px;
     }
     
-    .visualizer-button {
-        margin-right: 8px;
+    .aproved-button {
+      margin-right: 8px;
+      background-color: rgb(0, 161, 0);
+    }
+
+    .rejected-button {
+      background-color: red;
     }
     
     .register-button {
