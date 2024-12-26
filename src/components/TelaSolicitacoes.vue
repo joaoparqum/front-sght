@@ -26,7 +26,12 @@
         </a-breadcrumb>
         <div :style="{ background: '#fff', padding: '24px', minHeight: '790px' }">
           <h1 style="text-align: center;">Tabela de Solicitações</h1>
-          <TabelaSolicitacoes/>
+          <span v-if="isAdmin">
+            <TabelaSolicitacoes/>
+          </span>
+          <span v-if="isUser">
+            <TabelaSolicitacoesUsuario/>
+          </span>
         </div>
       </a-layout-content>
       <a-layout-footer :style="{ position: 'relative', bottom: 0, width: '100%', textAlign: 'center', background: '#0404cf' }">
@@ -40,13 +45,16 @@
     import { message } from 'ant-design-vue';
     import { useRouter } from 'vue-router';
     import { LogoutOutlined } from '@ant-design/icons-vue';
-    import { onMounted, ref } from 'vue';
+    import { computed, onMounted, ref } from 'vue';
     import TabelaSolicitacoes from './TabelaSolicitacoes.vue';
+    import TabelaSolicitacoesUsuario from './TabelaSolicitacoesUsuario.vue';
 
     const router = useRouter();
     const store = useStore();
     const username = ref<string | null>(null);
     const currentYear = ref(new Date().getFullYear());
+    const isAdmin = computed(() => localStorage.getItem('role') === 'admin');
+    const isUser = computed(() => localStorage.getItem('role') === 'user');
 
     onMounted(() => {
         username.value = localStorage.getItem('login');

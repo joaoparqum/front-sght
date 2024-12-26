@@ -1,31 +1,10 @@
 <template>
     <div class="table-container">
-      <!-- Botão para adicionar solicitação -->
-      <a-button 
-        type="primary" 
-        @click="navegarParaAdicionarSolicitacao"
-        v-if="isAdmin"
-      >
-        <FileAddOutlined />
-        Adicionar Solicitação
-      </a-button>
-  
-      <!-- Botão para registrar usuário -->
-      <a-button 
-        v-if="isAdmin" 
-        type="primary" 
-        @click="cadastrarUsuario"
-        class="register-button"
-      >
-        <UserAddOutlined />
-        Registrar Colaborador
-      </a-button>
-  
       <br /><br />
       <!-- Campo de pesquisa -->
       <a-input-search
         v-model:value="searchTerm"
-        placeholder="Pesquisar por colaborador"
+        placeholder="Pesquisar por motivo"
         enter-button
         @search="onSearch"
       />
@@ -147,13 +126,13 @@
     
     // Carregar dados na montagem do componente
     onMounted(() => {
-        store.dispatch('fetchSolicitacoes');
+        store.dispatch('fetchSolicitacoesByUser');
     });
     
     // Atualizar dados quando o campo de busca muda
     watch(searchTerm, (newValue) => {
         if (!newValue) {
-          store.dispatch('fetchSolicitacoes');
+          store.dispatch('fetchSolicitacoesByUser');
         }
     });
     

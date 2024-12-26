@@ -11,6 +11,7 @@ interface State {
   login: string | null;
   document: any | null;
   url: string | null;
+  solicitacoes: any[];
 }
 
 const store = createStore({
@@ -26,8 +27,8 @@ const store = createStore({
         };
     },
     mutations: {
-        setData(state: State, data: any[]) {
-            state.data = data;
+        setData(state: State, payload: any[]) {
+            state.solicitacoes = payload;
         },
         setToken(state: State, token: string) {
             state.token = token;
@@ -110,61 +111,32 @@ const store = createStore({
             message.error('Erro ao cadastrar usuário!');
         }
     },
-    async fetchSolicitacoes({ commit }: { commit: (mutation: string, payload?: any) => void }) {
+    async fetchSolicitacoes({ commit }: { state: State; commit: (mutation: string, payload?: any) => void }) {
         try {
-            const response = await axios.get('http://localhost:8080/solicitacoes');
+            const token = localStorage.getItem('token');
+            const response = await axios.get('http://localhost:8080/solicitacoes', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            //console.log('Dados recebidos:', response.data);
             commit('setData', response.data);
         } catch (error) {
             console.error('Erro ao buscar dados:', error);
         }
     },
-    async searchDocumentByCode(
-        { commit }: { commit: (mutation: string, payload?: any) => void },
-        { DocumentCode, nomeArquivo }: { DocumentCode: string; nomeArquivo: string }
-    ) {
+    async fetchSolicitacoesByUser({ commit }: { state: State; commit: (mutation: string, payload?: any) => void }) {
         try {
-        const response = await axios.get(`http://localhost:8080/vistas/download/${DocumentCode}`, {
-            responseType: 'blob',
-        });
-        const url = window.URL.createObjectURL(new Blob([response.data]));
-        const link = document.createElement('a');
-        link.href = url;
-        link.setAttribute('download', nomeArquivo);
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        commit('setData', [response.data]);
+            const token = localStorage.getItem('token');
+            const response = await axios.get('http://localhost:8080/solicitacoes/user', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+            //console.log('Dados recebidos:', response.data);
+            commit('setData', response.data);
         } catch (error) {
-        console.error('Erro ao buscar documento por código:', error);
-        }
-    },
-    async searchDocumentByName(
-        { commit }: { commit: (mutation: string, payload?: any) => void }, 
-        nomeArquivo: string) 
-    {
-        try {
-        const response = await axios.get(`http://localhost:8080/vistas/nomeArquivo/${nomeArquivo}`);
-        commit('setData', response.data);
-        } catch (error) {
-        console.log("Erro ao buscar documento pelo nome!");
-        }
-    },
-    async fetchDocumentByCode(
-        { commit }: { commit: (mutation: string, payload?: any) => void },
-        { DocumentCode }: { DocumentCode: string})
-    {
-        try {
-        const response = await axios.get(`http://localhost:8080/vistas/view/${DocumentCode}`, {
-            responseType: 'blob', // Certifique-se de receber como blob
-        });
-
-        const documentUrl = window.URL.createObjectURL(new Blob([response.data]));
-        commit('setDocument', documentUrl);
-        return documentUrl;
-        } catch (error) {
-        console.error('Erro ao carregar o conteúdo do documento:', error);
-        commit('setDocument', null);
-        throw new Error('Erro ao carregar o conteúdo do documento!');
+            console.error('Erro ao buscar dados:', error);
         }
     },
     async deleteSolicitacao(

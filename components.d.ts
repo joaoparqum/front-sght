@@ -32,6 +32,7 @@ declare module 'vue' {
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TabelaSolicitacoes: typeof import('./src/components/TabelaSolicitacoes.vue')['default']
+    TabelaSolicitacoesUsuario: typeof import('./src/components/TabelaSolicitacoesUsuario.vue')['default']
     TelaCriaSolicitacao: typeof import('./src/components/TelaCriaSolicitacao.vue')['default']
     TelaCriaUsuario: typeof import('./src/components/TelaCriaUsuario.vue')['default']
     TelaSolicitacoes: typeof import('./src/components/TelaSolicitacoes.vue')['default']
