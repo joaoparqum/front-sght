@@ -65,10 +65,17 @@
       username: formState.username,
       password: formState.password,
     });
+
     message.loading({ content: 'Fazendo o login no sistema...' });
-    if (success) {
+
+    if (success && localStorage.getItem('role') === 'admin') {
       setTimeout(() => {
         router.push('/HomeScreen');
+      }, 2000);
+      console.log('Login realizado com sucesso!');
+    } else if(success && localStorage.getItem('role') === 'user') {
+      setTimeout(() => {
+        router.push('/TelaSolicitacao');
       }, 2000);
       console.log('Login realizado com sucesso!');
     }

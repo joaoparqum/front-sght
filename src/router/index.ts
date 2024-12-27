@@ -10,7 +10,7 @@ const routes = [
     { path: '/HomeScreen', component: HomeScreen},
     { path: '/CriaUsuario', component: TelaCriaUsuario},
     { path: '/CriaSolicitacao', component: TelaCriaSolicitacao},
-    { path: '/TelaSolicitacao', component: TelaSolicitacoes}
+    { path: '/TelaSolicitacao', component: TelaSolicitacoes},
 ];
   
 const router = createRouter({
