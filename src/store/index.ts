@@ -56,124 +56,140 @@ const store = createStore({
         }
     },
     actions: {
-    async login(
-        { commit }: { commit: (mutation: string, payload?: any) => void }, 
-        { username, password }: { username: string; password: string }) 
-    {
-        try {
-        const response = await axios.post('http://localhost:8080/auth/login', {
-            login: username,
-            password: password,
-        });
-        const token = response.data.token;
-        const role = response.data.role;
-        const login = response.data.login;
+        async login(
+            { commit }: { commit: (mutation: string, payload?: any) => void }, 
+            { username, password }: { username: string; password: string }) 
+        {
+            try {
+                const response = await axios.post('http://localhost:8080/auth/login', {
+                    login: username,
+                    password: password,
+                });
+                const token = response.data.token;
+                const role = response.data.role;
+                const login = response.data.login;
 
-        commit('setToken', token);
-        commit('setUser', role);
-        commit('setLogin', login);
-        
-        localStorage.setItem('token', token);
-        localStorage.setItem('role', role);
-        localStorage.setItem('login', login);
+                commit('setToken', token);
+                commit('setUser', role);
+                commit('setLogin', login);
+                
+                localStorage.setItem('token', token);
+                localStorage.setItem('role', role);
+                localStorage.setItem('login', login);
 
-        console.log('token:', token);
-        console.log('role:', role);
-        console.log('login:', login);
+                console.log('token:', token);
+                console.log('role:', role);
+                console.log('login:', login);
 
-        message.success('Login realizado com sucesso!');
+                message.success('Login realizado com sucesso!');
 
-        return true;
-        } catch (error: any) {
-        if (error.response && error.response.status === 401) {
-            message.error('Credenciais inválidas. Verifique seu login e senha.');
-        } else {
-            message.error('Erro ao fazer login! Tente novamente mais tarde.');
-        }
-        return false;
-        }
-    },
-    async logout({ commit }: { commit: (mutation: string, payload?: any) => void }) {
-        commit('setToken', null);
-        localStorage.removeItem('token');
-    },
-    async registerUser(
-        { commit }: { commit: (mutation: string, payload?: any) => void }, 
-        userData: any) 
-    {
-        try {
-            const response = await axios.post('http://localhost:8080/auth/register', userData);
-            console.log('Usuário cadastrado com sucesso:', response.data);
-            message.success('Usuário cadastrado com sucesso!');
-            commit('setUser', userData);
-        } catch (error) {
-            console.error('Erro ao cadastrar usuário:', error);
-            message.error('Erro ao cadastrar usuário!');
-        }
-    },
-    async fetchSolicitacoes({ commit }: { state: State; commit: (mutation: string, payload?: any) => void }) {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await axios.get('http://localhost:8080/solicitacoes', {
+                return true;
+            } catch (error: any) {
+            if (error.response && error.response.status === 401) {
+                message.error('Credenciais inválidas. Verifique seu login e senha.');
+            } else {
+                message.error('Erro ao fazer login! Tente novamente mais tarde.');
+            }
+            return false;
+            }
+        },
+        async logout({ commit }: { commit: (mutation: string, payload?: any) => void }) {
+            commit('setToken', null);
+            localStorage.removeItem('token');
+        },
+        async registerUser(
+            { commit }: { commit: (mutation: string, payload?: any) => void }, 
+            userData: any) 
+        {
+            try {
+                const response = await axios.post('http://localhost:8080/auth/register', userData);
+                console.log('Usuário cadastrado com sucesso:', response.data);
+                message.success('Usuário cadastrado com sucesso!');
+                commit('setUser', userData);
+            } catch (error) {
+                console.error('Erro ao cadastrar usuário:', error);
+                message.error('Erro ao cadastrar usuário!');
+            }
+        },
+        async fetchSolicitacoes({ commit }: { state: State; commit: (mutation: string, payload?: any) => void }) {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await axios.get('http://localhost:8080/solicitacoes', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                //console.log('Dados recebidos:', response.data);
+                commit('setData', response.data);
+            } catch (error) {
+                console.error('Erro ao buscar dados:', error);
+            }
+        },
+        async fetchSolicitacoesByUser({ commit }: { state: State; commit: (mutation: string, payload?: any) => void }) {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await axios.get('http://localhost:8080/solicitacoes/user', {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                });
+                //console.log('Dados recebidos:', response.data);
+                commit('setData', response.data);
+            } catch (error) {
+                console.error('Erro ao buscar dados:', error);
+            }
+        },
+        async deleteSolicitacao(
+            { state, dispatch }: { state: State; dispatch: (action: string, payload?: any) => Promise<any> }, 
+            id: string) 
+        {
+            try {
+            await axios.delete(`http://localhost:8080/solicitacoes/${id}`, {
                 headers: {
-                    Authorization: `Bearer ${token}`,
+                    'Authorization': `Bearer ${state.token}`,
                 },
             });
-            //console.log('Dados recebidos:', response.data);
-            commit('setData', response.data);
-        } catch (error) {
-            console.error('Erro ao buscar dados:', error);
-        }
-    },
-    async fetchSolicitacoesByUser({ commit }: { state: State; commit: (mutation: string, payload?: any) => void }) {
-        try {
-            const token = localStorage.getItem('token');
-            const response = await axios.get('http://localhost:8080/solicitacoes/user', {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-            //console.log('Dados recebidos:', response.data);
-            commit('setData', response.data);
-        } catch (error) {
-            console.error('Erro ao buscar dados:', error);
-        }
-    },
-    async deleteSolicitacao(
-        { state, dispatch }: { state: State; dispatch: (action: string, payload?: any) => Promise<any> }, 
-        id: string) 
-    {
-        try {
-        await axios.delete(`http://localhost:8080/solicitacoes/${id}`, {
-            headers: {
-            'Authorization': `Bearer ${state.token}`,
-            },
-        });
-        dispatch('fetchSolicitacoes');
-        } catch (error) {
-        console.error('Erro ao excluir o documento:', error);
-        }
-    },
-    async addDocument(
-        { state, dispatch }: { state: State; dispatch: (action: string, payload?: any) => Promise<any> }, 
-        file: File) 
-    {
-        try {
-            const formData = new FormData();
-            formData.append('file', file);
-            await axios.post('http://localhost:8080/vistas/upload', formData, {
-                headers: {
-                'Content-Type': 'multipart/form-data',
-                'Authorization': `Bearer ${state.token}`
-            },
-        });
-        dispatch('fetchData');
-        } catch (error: any) {
-            if (error.response && error.response.data && error.response.data.message) {
-                throw new Error(error.response.data.message);
+            dispatch('fetchSolicitacoes');
+            } catch (error) {
+                console.error('Erro ao excluir o documento:', error);
+            }
+        },
+        async createSolicitacao( { dispatch }: { dispatch: (action: string, payload?:any) => Promise<any> })
+        {
+            try{
+                const token = localStorage.getItem('token');
+                await axios.post(`http://localhost:8080/solicitacoes`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    }
+                })
+            } catch (error) {
+                console.log('Erro ao criar solicitação: ', error);
+            }
+        },
+        async changeStatus(
+            { dispatch }: { state: State; dispatch: (action: string, payload?: any) => Promise<any> },
+            { id, status }: { id: string; status: string }
+        ) {
+            try {
+                const token = localStorage.getItem('token');
+                await axios.patch(
+                    `http://localhost:8080/solicitacoes/${id}/status`, null, 
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                        },
+                        params: {
+                            status,
+                        },
+                    }
+                );
+                dispatch('fetchSolicitacoes');
+            } catch (error) {
+                console.error('Erro ao mudar status da solicitação:', error);
             }
         }
-    },
+        
     },
     getters: {
         flightData: (state: State) => state.data,

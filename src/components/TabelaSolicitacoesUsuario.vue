@@ -1,5 +1,13 @@
 <template>
     <div class="table-container">
+      <a-button 
+        type="primary" 
+        @click="navegarParaAdicionarSolicitacao"
+      >
+        <FileAddOutlined />
+        Adicionar Solicitação
+      </a-button>
+
       <br /><br />
       <!-- Campo de pesquisa -->
       <a-input-search
@@ -36,7 +44,7 @@
               <EditOutlined />
               Editar
             </a-button>
-            <span v-if="isAdmin">
+            <span>
               <a-divider type="vertical" />
               <a-button 
                 type="primary" 
@@ -75,10 +83,6 @@
     // Funções auxiliares
     const navegarParaAdicionarSolicitacao = () => {
         router.push('/CriaSolicitacao');
-    };
-    
-    const cadastrarUsuario = () => {
-        router.push('/TelaCriaUsuario');
     };
     
     const onSearch = async (motivo: string) => {

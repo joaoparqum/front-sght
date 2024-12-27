@@ -57,9 +57,11 @@
   <script lang="ts" setup>
   import { reactive } from 'vue';
   import { useStore } from 'vuex';
+  import { useRouter } from 'vue-router';
   import { message } from 'ant-design-vue';
   
   const store = useStore();
+  const router = useRouter();
   
   // Interface para o estado do formulário
   interface SolicitacaoFormState {
@@ -85,6 +87,9 @@
         horasSolicitadas: formState.horasSolicitadas,
       });
       message.success({ content: 'Solicitação criada com sucesso!' });
+      setTimeout(() => {
+        router.push('/TelaSolicitacao')
+      }, 2000);
     } catch (error) {
       console.error('Erro ao criar solicitação:', error);
       message.error({ content: 'Erro ao criar solicitação.' });

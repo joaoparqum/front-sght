@@ -244,7 +244,7 @@
     }
 
     .bell{
-      width: 28px;
+      width: 32px;
     }
 
     .bell-container{

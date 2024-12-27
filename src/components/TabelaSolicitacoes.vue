@@ -51,7 +51,7 @@
             <a-button 
               type="primary" 
               size="small" 
-              @click=""
+              @click="aprovarSolicitacao(record.id)"
               class="aproved-button"
             >
               Aprovar
@@ -60,7 +60,7 @@
               <a-button 
                 type="primary" 
                 size="small" 
-                @click=""
+                @click="rejeitarSolicitacao(record.id)"
                 class="rejected-button"
               >
                 Rejeitar
@@ -77,7 +77,7 @@
     import { useStore } from 'vuex';
     import { useRouter } from 'vue-router';
     import { message } from 'ant-design-vue';
-    import { FileAddOutlined, UserAddOutlined, CheckOutlined, CloseOutlined } from '@ant-design/icons-vue';
+    import { FileAddOutlined, UserAddOutlined } from '@ant-design/icons-vue';
     
     // Router e Store
     const router = useRouter();
@@ -97,6 +97,27 @@
     
     const cadastrarUsuario = () => {
         router.push('/TelaCriaUsuario');
+    };
+
+    // Funções para alterar status
+    const aprovarSolicitacao = async (id: number) => {
+        try {
+            await store.dispatch('changeStatus', { id, status: 'APROVADO' });
+            message.success('Solicitação aprovada com sucesso!');
+        } catch (error) {
+            message.error('Erro ao aprovar solicitação.');
+            console.error(error);
+        }
+    };
+
+    const rejeitarSolicitacao = async (id: number) => {
+        try {
+            await store.dispatch('changeStatus', { id, status: 'REJEITADO' });
+            message.success('Solicitação rejeitada com sucesso!');
+        } catch (error) {
+            message.error('Erro ao rejeitar solicitação.');
+            console.error(error);
+        }
     };
     
     const onSearch = async (motivo: string) => {
@@ -119,9 +140,9 @@
         switch (status) {
             case 'PENDENTE':
                 return 'gold';
-            case 'APROVADA':
+            case 'APROVADO':
                 return 'green';
-            case 'REJEITADA':
+            case 'REJEITADO':
                 return 'red';
             default:
                 return 'blue';
