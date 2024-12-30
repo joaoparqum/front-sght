@@ -12,6 +12,7 @@ interface State {
   document: any | null;
   url: string | null;
   solicitacoes: any[];
+  novasSolicitacoes: any[];
 }
 
 const store = createStore({
@@ -24,6 +25,7 @@ const store = createStore({
             login: null,
             isLoggedIn: false,
             document: null,
+            novasSolicitacoes: []
         };
     },
     mutations: {
@@ -53,7 +55,10 @@ const store = createStore({
         },
         clearDocument(state: State) {
             state.document = null;
-        }
+        },
+        setNovasSolicitacoes(state: any, solicitacoes: any[]) {
+            state.novasSolicitacoes = solicitacoes;
+        },        
     },
     actions: {
         async login(
@@ -200,12 +205,31 @@ const store = createStore({
             } catch (error) {
                 console.error('Erro ao mudar status da solicitação:', error);
             }
-        }
-        
-    },
+        },
+        async fetchNovasSolicitacoes({ commit }: any) {
+            const token = localStorage.getItem('token');
+            const response = await axios.get('http://localhost:8080/solicitacoes/nao-vistas', {
+                headers: { 'Authorization': `Bearer ${token}` },
+            });
+            commit('setNovasSolicitacoes', response.data);
+        },
+        async marcarNotificacoesComoVistas({ dispatch }: any) {
+            try {
+                const token = localStorage.getItem('token');
+                await axios.put('http://localhost:8080/solicitacoes/marcar-vistas', {}, {
+                    headers: { 'Authorization': `Bearer ${token}` },
+                });
+                // Atualiza a lista de notificações após marcar como vistas
+                dispatch('fetchNovasSolicitacoes');
+            } catch (error) {
+                console.error('Erro ao marcar notificações como vistas:', error);
+            }
+        },   
+    },     
     getters: {
         flightData: (state: State) => state.data,
         documentUrl: (state: State) => state.document,
+        novasSolicitacoes: (state: State) => state.novasSolicitacoes
     },
 });
 

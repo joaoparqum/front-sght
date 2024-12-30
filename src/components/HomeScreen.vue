@@ -11,14 +11,19 @@
         <div style="display: flex; align-items: center; gap: 10px;">
 
           <div class="bell-container">
-            <a-badge count="5">
-              <a-popover placement="leftBottom">
+            <a-badge :count="novasSolicitacoes.length">
+              <a-popover 
+                placement="leftBottom"
+              >
                 <template #content>
-                  <p>Content</p>
-                  <p>Content</p>
+                  <ul>
+                    <li v-for="solicitacao in novasSolicitacoes" :key="solicitacao.id">
+                      Colaborador: {{ solicitacao.userLogin }} - Motivo: {{ solicitacao.motivo }} - Horas:  {{ solicitacao.horasSolicitadas }}
+                    </li>
+                  </ul>
                 </template>
                 <template #title>
-                  <span>Title</span>
+                  <span>Novas Solicitações!</span>
                 </template>
                 <img src="/bell.png" class="bell">
               </a-popover>
@@ -97,12 +102,21 @@
     const store = useStore();
     const username = ref<string | null>(null);
     const currentYear = ref(new Date().getFullYear());
+    const value = ref<Dayjs>();
+    const novasSolicitacoes = computed(() => store.state.novasSolicitacoes || []);
+    const formatDate = (date: string) => new Date(date).toLocaleString();
 
     onMounted(() => {
         username.value = localStorage.getItem('login');
+        store.dispatch('fetchNovasSolicitacoes');
     });
 
-    const value = ref<Dayjs>();
+    /*const onPopoverOpen = async (visible: boolean) => {
+        if (visible) {
+            await store.dispatch('marcarNotificacoesComoVistas');
+        }
+    };*/
+
     const onPanelChange = (value: Dayjs, mode: string) => {
       console.log(value, mode);
     };
