@@ -36,7 +36,7 @@
         :columns="columns" 
         :data-source="data" 
         :row-key="record => record.id" 
-        :pagination="{ pageSize: 6 }"
+        :pagination="{ pageSize: 8 }"
       >
         <template #bodyCell="{ column, record }">
           <template v-if="column.key === 'data'">

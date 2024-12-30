@@ -54,7 +54,7 @@
     </div>
   </template>
   
-  <script lang="ts" setup>
+<script lang="ts" setup>
   import { reactive } from 'vue';
   import { useStore } from 'vuex';
   import { useRouter } from 'vue-router';
@@ -76,6 +76,12 @@
     motivo: '',
     horasSolicitadas: null,
   });
+
+  const resetForm = () => {
+    formState.data = '';
+    formState.motivo = '';
+    formState.horasSolicitadas = null;
+  };
   
   // Função chamada no envio bem-sucedido do formulário
   const onFinish = async () => {
@@ -87,6 +93,7 @@
         horasSolicitadas: formState.horasSolicitadas,
       });
       message.success({ content: 'Solicitação criada com sucesso!' });
+      resetForm(); // Resetando o formulário
       setTimeout(() => {
         router.push('/TelaSolicitacao')
       }, 2000);
@@ -100,4 +107,4 @@
   const onFinishFailed = (errorInfo: any) => {
     console.log('Falha no envio do formulário:', errorInfo);
   };
-  </script>
+</script>

@@ -154,19 +154,31 @@ const store = createStore({
                 console.error('Erro ao excluir o documento:', error);
             }
         },
-        async createSolicitacao( { dispatch }: { dispatch: (action: string, payload?:any) => Promise<any> })
-        {
-            try{
-                const token = localStorage.getItem('token');
-                await axios.post(`http://localhost:8080/solicitacoes`, {
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
+        async createSolicitacao(
+            { dispatch }: { dispatch: (action: string, payload?: any) => Promise<any> },
+            payload: { data: string; motivo: string; horasSolicitadas: number }
+        ) {
+            try {
+                const token = localStorage.getItem('token'); // Recupera o token do localStorage
+                await axios.post(
+                    `http://localhost:8080/solicitacoes`,
+                    {
+                        data: payload.data,
+                        motivo: payload.motivo,
+                        horasSolicitadas: payload.horasSolicitadas,
+                    },
+                    {
+                        headers: {
+                            'Authorization': `Bearer ${token}`, // Inclui o token no cabeçalho
+                        },
                     }
-                })
+                );
+                console.log('Solicitação criada com sucesso!');
+                await dispatch('fetchSolicitacoes');
             } catch (error) {
-                console.log('Erro ao criar solicitação: ', error);
+                console.error('Erro ao criar solicitação: ', error);
             }
-        },
+        },   
         async changeStatus(
             { dispatch }: { state: State; dispatch: (action: string, payload?: any) => Promise<any> },
             { id, status }: { id: string; status: string }
