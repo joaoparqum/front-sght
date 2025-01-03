@@ -115,8 +115,8 @@
     };
     
     // Ações
-    const editarSolicitacao = (id: number) => {
-        router.push(`/VisualizarSolicitacao/${id}`);
+    const editarSolicitacao = (id: string) => {
+        router.push(`/EditaSolicitacao/${id}`);
     };
     
     const deleteSolicitacao = async (id: number) => {

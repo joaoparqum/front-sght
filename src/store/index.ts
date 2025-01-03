@@ -13,6 +13,7 @@ interface State {
   url: string | null;
   solicitacoes: any[];
   novasSolicitacoes: any[];
+  id: string | null;
 }
 
 const store = createStore({
@@ -25,7 +26,8 @@ const store = createStore({
             login: null,
             isLoggedIn: false,
             document: null,
-            novasSolicitacoes: []
+            novasSolicitacoes: [],
+            id: null
         };
     },
     mutations: {
@@ -37,6 +39,9 @@ const store = createStore({
         },
         setUser(state: State, user: string) {
             state.user = user;
+        },
+        setId(state: State, id: string) {
+            state.id = id;
         },
         setRole(state: State, role: string) { 
             state.role = role;
@@ -145,16 +150,17 @@ const store = createStore({
             }
         },
         async deleteSolicitacao(
-            { state, dispatch }: { state: State; dispatch: (action: string, payload?: any) => Promise<any> }, 
+            { dispatch }: { dispatch: (action: string, payload?: any) => Promise<any> }, 
             id: string) 
         {
             try {
-            await axios.delete(`http://localhost:8080/solicitacoes/${id}`, {
-                headers: {
-                    'Authorization': `Bearer ${state.token}`,
-                },
-            });
-            dispatch('fetchSolicitacoes');
+                const token = localStorage.getItem('token');
+                await axios.delete(`http://localhost:8080/solicitacoes/${id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`,
+                    },
+                });
+                dispatch('fetchSolicitacoesByUser');
             } catch (error) {
                 console.error('Erro ao excluir o documento:', error);
             }
@@ -224,7 +230,28 @@ const store = createStore({
             } catch (error) {
                 console.error('Erro ao marcar notificações como vistas:', error);
             }
-        },   
+        },
+        async updateSolicitacao({ dispatch }: { dispatch: (action: string, payload?: any) => Promise<any> }, 
+        { id, updatedData }: { id: string; updatedData: any }) {
+            try {
+                await axios.put(`http://localhost:8080/solicitacoes/${id}`, updatedData);
+                dispatch('fetchSolicitacoesById');
+            } catch (error) {
+                console.error('Erro ao atualizar a solicitação!', error);
+            }
+        },
+        async fetchSolicitacaoById({ id }:{ id: string }) 
+        {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await axios.get(`http://localhost:8080/solicitacoes/${id}`, {
+                    headers: { 'Authorization': `Bearer ${token}` },
+                });
+                return response.data;
+            } catch (error) {
+                console.log("Erro ao encontrar solicitação:", error);
+            }
+        }        
     },     
     getters: {
         flightData: (state: State) => state.data,

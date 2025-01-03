@@ -29,6 +29,7 @@ declare module 'vue' {
     ATag: typeof import('ant-design-vue/es')['Tag']
     FormCriaSolicitacao: typeof import('./src/components/FormCriaSolicitacao.vue')['default']
     FormCriaUsuario: typeof import('./src/components/FormCriaUsuario.vue')['default']
+    FormEditarSolicitacao: typeof import('./src/components/FormEditarSolicitacao.vue')['default']
     Home: typeof import('./src/components/Home.vue')['default']
     HomeScreen: typeof import('./src/components/HomeScreen.vue')['default']
     Login: typeof import('./src/components/Login.vue')['default']
@@ -38,6 +39,7 @@ declare module 'vue' {
     TabelaSolicitacoesUsuario: typeof import('./src/components/TabelaSolicitacoesUsuario.vue')['default']
     TelaCriaSolicitacao: typeof import('./src/components/TelaCriaSolicitacao.vue')['default']
     TelaCriaUsuario: typeof import('./src/components/TelaCriaUsuario.vue')['default']
+    TelaEditaSolicitacao: typeof import('./src/components/TelaEditaSolicitacao.vue')['default']
     TelaSolicitacoes: typeof import('./src/components/TelaSolicitacoes.vue')['default']
   }
 }

@@ -14,6 +14,7 @@
             <a-badge :count="novasSolicitacoes.length">
               <a-popover 
                 placement="leftBottom"
+                
               >
                 <template #content>
                   <ul>
@@ -21,6 +22,7 @@
                       Colaborador: {{ solicitacao.userLogin }} - Motivo: {{ solicitacao.motivo }} - Horas:  {{ solicitacao.horasSolicitadas }}
                     </li>
                   </ul>
+                  <a-button type="primary" @click="marcarTodasComoVistas">Marcar todas como vistas</a-button>
                 </template>
                 <template #title>
                   <span>Novas Solicitações!</span>
@@ -110,6 +112,17 @@
         username.value = localStorage.getItem('login');
         store.dispatch('fetchNovasSolicitacoes');
     });
+
+    // Atualiza as notificações a cada 60 segundos
+    setInterval(() => {
+        store.dispatch('fetchNovasSolicitacoes');
+    }, 60000);
+
+    const marcarTodasComoVistas = async () => {
+        await store.dispatch('marcarNotificacoesComoVistas');
+        message.success('Notificações marcadas como vistas.');
+    };
+
 
     /*const onPopoverOpen = async (visible: boolean) => {
         if (visible) {
@@ -233,6 +246,7 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.3);
       background-color: white; /* Cor inicial */
       transition: background-color 1s ease;
       color: black;
