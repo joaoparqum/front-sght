@@ -27,6 +27,8 @@ declare module 'vue' {
     ASelect: typeof import('ant-design-vue/es')['Select']
     ATable: typeof import('ant-design-vue/es')['Table']
     ATag: typeof import('ant-design-vue/es')['Tag']
+    AUpload: typeof import('ant-design-vue/es')['Upload']
+    FormCriaHoraValida: typeof import('./src/components/FormCriaHoraValida.vue')['default']
     FormCriaSolicitacao: typeof import('./src/components/FormCriaSolicitacao.vue')['default']
     FormCriaUsuario: typeof import('./src/components/FormCriaUsuario.vue')['default']
     FormEditarSolicitacao: typeof import('./src/components/FormEditarSolicitacao.vue')['default']
@@ -35,11 +37,14 @@ declare module 'vue' {
     Login: typeof import('./src/components/Login.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    TabelaHoras: typeof import('./src/components/TabelaHoras.vue')['default']
     TabelaSolicitacoes: typeof import('./src/components/TabelaSolicitacoes.vue')['default']
     TabelaSolicitacoesUsuario: typeof import('./src/components/TabelaSolicitacoesUsuario.vue')['default']
+    TelaCriaHoraValida: typeof import('./src/components/TelaCriaHoraValida.vue')['default']
     TelaCriaSolicitacao: typeof import('./src/components/TelaCriaSolicitacao.vue')['default']
     TelaCriaUsuario: typeof import('./src/components/TelaCriaUsuario.vue')['default']
     TelaEditaSolicitacao: typeof import('./src/components/TelaEditaSolicitacao.vue')['default']
+    TelaHorasValidas: typeof import('./src/components/TelaHorasValidas.vue')['default']
     TelaSolicitacoes: typeof import('./src/components/TelaSolicitacoes.vue')['default']
   }
 }

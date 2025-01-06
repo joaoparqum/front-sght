@@ -5,14 +5,18 @@ import TelaCriaSolicitacao from '../components/TelaCriaSolicitacao.vue';
 import TelaSolicitacoes from '../components/TelaSolicitacoes.vue';
 import HomeScreen from '../components/HomeScreen.vue';
 import TelaEditaSolicitacao from '../components/TelaEditaSolicitacao.vue';
+import TelaHorasValidas from '../components/TelaHorasValidas.vue';
+import TelaCriaHoraValida from '../components/TelaCriaHoraValida.vue';
 
 const routes = [
     { path: '/', component: Home },
     { path: '/HomeScreen', component: HomeScreen},
     { path: '/CriaUsuario', component: TelaCriaUsuario},
     { path: '/CriaSolicitacao', component: TelaCriaSolicitacao},
+    { path: '/CriaHoraValida', component: TelaCriaHoraValida},
     { path: '/TelaSolicitacao', component: TelaSolicitacoes},
-    { path: '/EditaSolicitacao', component: TelaEditaSolicitacao}
+    { path: '/EditaSolicitacao', component: TelaEditaSolicitacao},
+    { path: '/TelaHorasValidas', component: TelaHorasValidas}
 ];
   
 const router = createRouter({
