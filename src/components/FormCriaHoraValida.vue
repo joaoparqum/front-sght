@@ -8,51 +8,172 @@
         @finish="onFinish"
         @finishFailed="onFinishFailed"
       >
-        <!-- Campo Data -->
-        <a-form-item
-          label="Data"
-          name="data"
-          :rules="[{ required: true, message: 'Insira a data!' }]"
-        >
-          <a-date-picker
-            v-model:value="formState.data"
-            format="YYYY-MM-DDTHH:mm:ss"
-            show-time
-            style="width: 100%;"
-          />
-        </a-form-item>
+        <a-row :gutter="[16, 16]">
+          <!-- Nome do Colaborador -->
+          <a-col :span="8">
+            <a-form-item label="Nome" name="nomeColaborador" rules="[ { required: true, message: 'Por favor, insira o nome do colaborador' } ]">
+              <a-input v-model:value="formState.nomeColaborador" placeholder="Digite o nome" />
+            </a-form-item>
+          </a-col>
   
-        <!-- Campo Motivo -->
-        <a-form-item
-          label="Motivo"
-          name="motivo"
-          :rules="[{ required: true, message: 'Insira o motivo!' }]"
-        >
-          <a-input v-model:value="formState.motivo" />
-        </a-form-item>
+          <!-- Filial -->
+          <a-col :span="8">
+            <a-form-item label="Filial" name="filial" rules="[ { required: true, message: 'Por favor, selecione a filial' } ]">
+              <a-select v-model:value="formState.filial" placeholder="Selecione a filial">
+                <a-select-option value="MATRIZ">Matriz</a-select-option>
+                <a-select-option value="ITABERABA">Itaberaba</a-select-option>
+                <a-select-option value="SEABRA">Seabra</a-select-option>
+                <a-select-option value="JACOBINA">Jacobina</a-select-option>
+                <a-select-option value="TINTASMC">TintasMC</a-select-option>
+                <a-select-option value="MORRO">Morro do Chapéu</a-select-option>
+                <a-select-option value="CONQUISTA">Vitória da Conquista</a-select-option>
+              </a-select>
+            </a-form-item>
+          </a-col>
+
+          <a-col :span="8">
+            <a-form-item label="Horas Junho/Julho">
+                <a-time-picker
+                    v-model="formState.junhoJulho"
+                    format="HH:mm"
+                    placeholder="Selecione horas e minutos"
+                />
+            </a-form-item>
+          </a-col>
+        </a-row>  
+
+        <a-row :gutter="[16, 16]">
+          <a-col :span="8">
+            <a-form-item label="Horas Agosto">
+                <a-time-picker
+                    v-model="formState.agosto"
+                    format="HH:mm"
+                    placeholder="Selecione horas e minutos"
+                />
+            </a-form-item>
+          </a-col>
+
+          <a-col :span="8">
+            <a-form-item label="Horas Set/Out">
+                <a-time-picker
+                    v-model="formState.setembroOutubro"
+                    format="HH:mm"
+                    placeholder="Selecione horas e minutos"
+                />
+            </a-form-item>
+          </a-col>
+
+          <a-col :span="8">
+            <a-form-item label="Horas Novembro">
+                <a-time-picker
+                    v-model="formState.novembro"
+                    format="HH:mm"
+                    placeholder="Selecione horas e minutos"
+                />
+            </a-form-item>
+          </a-col>
+        </a-row>  
+
+
+        <a-row :gutter="[16, 16]">
+          <a-col :span="8">
+            <a-form-item label="Horas Novembro">
+                <a-time-picker
+                    v-model="formState.novembro"
+                    format="HH:mm"
+                    placeholder="Selecione horas e minutos"
+                />
+            </a-form-item>
+          </a-col>
+
+          <a-col :span="8">
+            <a-form-item label="Horas Dezembro">
+                <a-time-picker
+                    v-model="formState.dezembro"
+                    format="HH:mm"
+                    placeholder="Selecione horas e minutos"
+                />
+            </a-form-item>
+          </a-col>
+
+          <a-col :span="8">
+            <a-form-item label="Horas Janeiro">
+                <a-time-picker
+                    v-model="formState.janeiro"
+                    format="HH:mm"
+                    placeholder="Selecione horas e minutos"
+                />
+            </a-form-item>
+          </a-col>
+        </a-row>  
+
+        <a-row :gutter="[16, 16]">
+          <a-col :span="8">
+            <a-form-item label="Horas Fevereiro">
+                <a-time-picker
+                    v-model="formState.fevereiro"
+                    format="HH:mm"
+                    placeholder="Selecione horas e minutos"
+                />
+            </a-form-item>
+          </a-col>
+
+          <a-col :span="8">
+            <a-form-item label="Horas Março">
+                <a-time-picker
+                    v-model="formState.marco"
+                    format="HH:mm"
+                    placeholder="Selecione horas e minutos"
+                />
+            </a-form-item>
+          </a-col>
+
+          <a-col :span="8">
+            <a-form-item label="Horas Abril">
+                <a-time-picker
+                    v-model="formState.abril"
+                    format="HH:mm"
+                    placeholder="Selecione horas e minutos"
+                />
+            </a-form-item>
+          </a-col>
+        </a-row>  
+
+        <a-row :gutter="[16, 16]">
+          <a-col :span="8">
+            <a-form-item label="Horas Maio">
+                <a-time-picker
+                    v-model="formState.maio"
+                    format="HH:mm"
+                    placeholder="Selecione horas e minutos"
+                />
+            </a-form-item>
+          </a-col>
+
+          <a-col :span="8">
+            <a-form-item label="Horas Junho">
+                <a-time-picker
+                    v-model="formState.junho"
+                    format="HH:mm"
+                    placeholder="Selecione horas e minutos"
+                />
+            </a-form-item>
+          </a-col>
+        </a-row>  
   
-        <!-- Campo Horas Solicitadas -->
-        <a-form-item
-          label="Horas Solicitadas"
-          name="horasSolicitadas"
-          :rules="[
-            { required: true, message: 'Insira a quantidade de horas solicitadas!' },
-            { type: 'number', min: 1, message: 'Insira um número válido!' }
-          ]"
-        >
-          <a-input-number
-            v-model:value="formState.horasSolicitadas"
-            style="width: 100%;"
-          />
-        </a-form-item>
-  
-        <br /><br />
-        <a-form-item>
-          <a-button type="primary" html-type="submit">Cadastrar Solicitação</a-button>
-        </a-form-item>
+        <!-- Botão de Submissão -->
+        <br />
+        <a-row justify="center">
+          <a-col>
+            <a-form-item>
+              <a-button type="primary" html-type="submit">Cadastrar Hora Válida</a-button>
+            </a-form-item>
+          </a-col>
+        </a-row>
       </a-form>
     </div>
-  </template>
+</template>
+  
   
 <script lang="ts" setup>
   import { reactive } from 'vue';
@@ -64,42 +185,66 @@
   const router = useRouter();
   
   // Interface para o estado do formulário
-  interface SolicitacaoFormState {
-    data: string;
-    motivo: string;
-    horasSolicitadas: number | null;
+  interface HorasFormState {
+    nomeColaborador: string;
+    filial: string;
+    junhoJulho: number;
+    agosto: number;
+    setembroOutubro: number;
+    novembro: number;
+    dezembro: number;
+    janeiro: number;
+    fevereiro: number;
+    marco: number;
+    abril: number;
+    maio: number;
+    junho: number;
   }
   
   // Estado inicial do formulário
-  const formState = reactive<SolicitacaoFormState>({
-    data: '',
-    motivo: '',
-    horasSolicitadas: null,
+  const formState = reactive<HorasFormState>({
+    nomeColaborador: '',
+    filial: '',
+    junhoJulho: 0,
+    agosto: 0,
+    setembroOutubro: 0,
+    novembro: 0,
+    dezembro: 0,
+    janeiro: 0,
+    fevereiro: 0,
+    marco: 0,
+    abril: 0,
+    maio: 0,
+    junho: 0
   });
 
-  const resetForm = () => {
-    formState.data = '';
-    formState.motivo = '';
-    formState.horasSolicitadas = null;
-  };
   
   // Função chamada no envio bem-sucedido do formulário
   const onFinish = async () => {
     try {
-      message.loading({ content: 'Enviando solicitação...' });
-      await store.dispatch('createSolicitacao', {
-        data: formState.data,
-        motivo: formState.motivo,
-        horasSolicitadas: formState.horasSolicitadas,
+      message.loading({ content: 'Enviando Hora Válida...' });
+      await store.dispatch('createHoraValida', {
+        nomeColaborador: formState.nomeColaborador,
+        filial: formState.filial,
+        junhoJulho: formState.junhoJulho,
+        agosto: formState.agosto,
+        setembroOutubro: formState.setembroOutubro,
+        novembro: formState.novembro,
+        dezembro: formState.dezembro,
+        janeiro: formState.janeiro,
+        fevereiro: formState.fevereiro,
+        marco: formState.marco,
+        abril: formState.abril,
+        maio: formState.maio,
+        junho: formState.junho
       });
       message.success({ content: 'Solicitação criada com sucesso!' });
-      resetForm(); // Resetando o formulário
       setTimeout(() => {
-        router.push('/TelaSolicitacao')
+        router.push('/TelaHorasValidas')
       }, 2000);
     } catch (error) {
-      console.error('Erro ao criar solicitação:', error);
-      message.error({ content: 'Erro ao criar solicitação.' });
+      console.error('Erro ao criar hora válida:', error);
+      message.error({ content: 'Erro ao criar hora válida.' });
     }
   };
   

@@ -22,11 +22,10 @@
       </a-layout-header>
   
       <a-layout-content :style="{ display:'flex', justifyContent:'center', alignItems: 'center', marginTop: '50px' }">
-        <a-breadcrumb :style="{ margin: '16px 0' }">
-        </a-breadcrumb>
-        <div :style="{ background: '#fff', padding: '60px', minHeight: '460px', marginLeft: '100px', marginRight: '100px', minWidth: '370px'}">
+        
+        <div :style="{ background: '#fff', padding: '80px', minHeight: '460px', marginLeft: '100px', marginRight: '100px', minWidth: '370px'}">
           <h1 style="text-align: center;">Cadastro de Hora Válida</h1>
-          <br>
+          
           <div class="form-container"><FormCriaHoraValida/></div>
         </div>
       </a-layout-content>
@@ -88,11 +87,15 @@
   }
   
   .form-container{
-    padding: 30px;
+    padding: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 50vh;
+  }
+
+  .title-hora{
+    text-align: center;
+    margin-bottom: 15px;
   }
   
   .header-title {

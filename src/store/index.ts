@@ -12,6 +12,7 @@ interface State {
   document: any | null;
   url: string | null;
   solicitacoes: any[];
+  horas: any[];
   novasSolicitacoes: any[];
   id: string | null;
 }
@@ -33,6 +34,9 @@ const store = createStore({
     mutations: {
         setData(state: State, payload: any[]) {
             state.solicitacoes = payload;
+        },
+        setHorasData(state: State, horas: any[]) {
+            state.horas = horas;
         },
         setToken(state: State, token: string) {
             state.token = token;
@@ -190,6 +194,37 @@ const store = createStore({
                 console.error('Erro ao criar solicitação: ', error);
             }
         },   
+        async createHoraValida( { dispatch }: { dispatch: (action: string, payload?: any) => Promise<any> }, horas: {nomeColaborador: string, filial: string, junhoJulho: number, agosto: number, setembroOutubro: number, novembro: number, dezembro: number, janeiro: number, fevereiro: number, marco: number,
+        abril: number, maio: number, junho: number    
+        }) {
+            try{
+                const token = localStorage.getItem('token');
+                await axios.post(`http://localhost:8080/horas`, 
+                {
+                    nomeColaborador: horas.nomeColaborador,
+                    filial: horas.filial,
+                    junhoJulho: horas.junhoJulho,
+                    agosto: horas.agosto,
+                    setembroOutubro: horas.setembroOutubro,
+                    novembro: horas.novembro,
+                    dezembro: horas.dezembro,
+                    janeiro: horas.janeiro,
+                    fevereiro: horas.fevereiro,
+                    marco: horas.marco,
+                    abril: horas.abril,
+                    maio: horas.maio,
+                    junho: horas.junho
+                },
+                {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                });
+                dispatch('fetchHoras');
+            } catch (error) {
+                console.log('Erro ao criar hora valida: ', error);
+            }
+        },
         async changeStatus(
             { dispatch }: { state: State; dispatch: (action: string, payload?: any) => Promise<any> },
             { id, status }: { id: string; status: string }
