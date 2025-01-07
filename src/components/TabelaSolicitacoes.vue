@@ -131,6 +131,12 @@
             await store.dispatch('fetchSolicitacoes');
         }
     };
+
+    watch(searchTerm, (newValue) => {
+      if (!newValue) {
+        store.dispatch('fetchSolicitacoes');
+      }
+    });
     
     // Formatar data
     const formatDate = (date: string) => new Date(date).toLocaleString();

@@ -254,6 +254,22 @@ const store = createStore({
                 console.log('Erro ao deletar hora válida: ', error);
             }
         },
+        async searchHorasByName(
+            { commit }: { commit: (mutation: string, payload?: any) => void }, 
+            nomeColaborador: string) 
+        {
+            try {
+              const token = localStorage.getItem('token');
+              const response = await axios.get(`http://localhost:8080/horas/nome/${nomeColaborador}`, {
+                headers: {
+                    'Authorization': `Bearer ${token}`
+                }
+              });
+              commit('setHorasData', response.data);
+            } catch (error) {
+              console.log("Erro ao buscar documento pelo nome!");
+            }
+        },
         async changeStatus(
             { dispatch }: { state: State; dispatch: (action: string, payload?: any) => Promise<any> },
             { id, status }: { id: string; status: string }

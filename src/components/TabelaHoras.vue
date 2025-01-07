@@ -11,7 +11,7 @@
         v-model:value="searchTerm"
         placeholder="Pesquisar por colaborador"
         enter-button
-        @search=""
+        @search="onSearch"
     />
     <br /><br />
 
@@ -33,6 +33,16 @@
             </template>
             <template v-else-if="column.key === 'operation'">
                 <a-button 
+                    type="primary" 
+                    size="small" 
+                    @click="editarHoraValida(record.id)"
+                    class="visualizer-button"
+                >
+                    <EditOutlined />
+                    Editar
+                </a-button>
+                <a-divider type="vertical" />
+                <a-button 
                     type="primary"  
                     size="small"
                     danger 
@@ -52,7 +62,7 @@
 <script lang="ts" setup>
   import { computed, onMounted, reactive, ref } from 'vue';
   import { message, type TableColumnsType } from 'ant-design-vue';
-  import { DeleteOutlined, FileAddOutlined } from '@ant-design/icons-vue';
+  import { DeleteOutlined, EditOutlined, FileAddOutlined } from '@ant-design/icons-vue';
   import { useRouter } from 'vue-router';
   import { useStore } from 'vuex';
 
@@ -80,6 +90,27 @@
     }
  };
 
+ const editarHoraValida = async (id: number) => {
+    try{
+        await store.dispatch('editarHoras', id);
+        message.success('Hora válida editada com sucesso!');
+    } catch {
+        message.error('Erro ao editar hora válida!');
+    }
+ }
+
+ const onSearch = async (nomeColaborador: string) => {
+    if (searchTerm.value) {
+        try {
+            await store.dispatch('searchHorasByName', nomeColaborador);
+        } catch {
+            message.error('Erro ao buscar colaborador. Verifique o termo digitado.');
+        }
+    } else {
+        await store.dispatch('fetchHoras');
+    }
+};
+
   const colorMap: { [key: string]: string } = {
     MATRIZ: 'geekblue',
     SEABRA: 'green',
@@ -87,7 +118,7 @@
     ITABERABA: 'volcano',
     MORRO: 'cyan',
     JACOBINA: 'purple',
-    CONQUISTA: 'magenta',
+    CONQUISTA: 'red',
   };
   
   // Colunas da tabela
