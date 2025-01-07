@@ -2,7 +2,7 @@
     <div style="display: flex; justify-content: center; align-items: center;">
       <a-form
         :model="formState"
-        name="solicitacao"
+        name="horavalida"
         layout="vertical"
         autocomplete="off"
         @finish="onFinish"
@@ -32,44 +32,28 @@
           </a-col>
 
           <a-col :span="8">
-            <a-form-item label="Horas Junho/Julho">
-                <a-time-picker
-                    v-model="formState.junhoJulho"
-                    format="HH:mm"
-                    placeholder="Selecione horas e minutos"
-                />
+            <a-form-item label="Horas Jun/Jul" >
+              <a-input v-model:value="formState.junhoJulho" placeholder="Digite as horas" />
             </a-form-item>
           </a-col>
         </a-row>  
 
         <a-row :gutter="[16, 16]">
           <a-col :span="8">
-            <a-form-item label="Horas Agosto">
-                <a-time-picker
-                    v-model="formState.agosto"
-                    format="HH:mm"
-                    placeholder="Selecione horas e minutos"
-                />
+            <a-form-item label="Horas Agosto" >
+              <a-input v-model:value="formState.agosto" placeholder="Digite as horas" />
             </a-form-item>
           </a-col>
 
           <a-col :span="8">
-            <a-form-item label="Horas Set/Out">
-                <a-time-picker
-                    v-model="formState.setembroOutubro"
-                    format="HH:mm"
-                    placeholder="Selecione horas e minutos"
-                />
+            <a-form-item label="Horas Set/Out" >
+              <a-input v-model:value="formState.setembroOutubro" placeholder="Digite as horas" />
             </a-form-item>
           </a-col>
 
           <a-col :span="8">
-            <a-form-item label="Horas Novembro">
-                <a-time-picker
-                    v-model="formState.novembro"
-                    format="HH:mm"
-                    placeholder="Selecione horas e minutos"
-                />
+            <a-form-item label="Horas Novembro" >
+              <a-input v-model:value="formState.novembro" placeholder="Digite as horas" />
             </a-form-item>
           </a-col>
         </a-row>  
@@ -77,86 +61,48 @@
 
         <a-row :gutter="[16, 16]">
           <a-col :span="8">
-            <a-form-item label="Horas Novembro">
-                <a-time-picker
-                    v-model="formState.novembro"
-                    format="HH:mm"
-                    placeholder="Selecione horas e minutos"
-                />
+            <a-form-item label="Horas Dezembro" >
+              <a-input v-model:value="formState.dezembro" placeholder="Digite as horas" />
             </a-form-item>
           </a-col>
 
           <a-col :span="8">
-            <a-form-item label="Horas Dezembro">
-                <a-time-picker
-                    v-model="formState.dezembro"
-                    format="HH:mm"
-                    placeholder="Selecione horas e minutos"
-                />
+            <a-form-item label="Horas Janeiro" >
+              <a-input v-model:value="formState.janeiro" placeholder="Digite as horas" />
             </a-form-item>
           </a-col>
 
           <a-col :span="8">
-            <a-form-item label="Horas Janeiro">
-                <a-time-picker
-                    v-model="formState.janeiro"
-                    format="HH:mm"
-                    placeholder="Selecione horas e minutos"
-                />
+            <a-form-item label="Horas Fevereiro" >
+              <a-input v-model:value="formState.fevereiro" placeholder="Digite as horas" />
             </a-form-item>
           </a-col>
         </a-row>  
 
         <a-row :gutter="[16, 16]">
           <a-col :span="8">
-            <a-form-item label="Horas Fevereiro">
-                <a-time-picker
-                    v-model="formState.fevereiro"
-                    format="HH:mm"
-                    placeholder="Selecione horas e minutos"
-                />
+            <a-form-item label="Horas Março" >
+              <a-input v-model:value="formState.marco" placeholder="Digite as horas" />
             </a-form-item>
           </a-col>
 
           <a-col :span="8">
-            <a-form-item label="Horas Março">
-                <a-time-picker
-                    v-model="formState.marco"
-                    format="HH:mm"
-                    placeholder="Selecione horas e minutos"
-                />
+            <a-form-item label="Horas Abril" >
+              <a-input v-model:value="formState.abril" placeholder="Digite as horas" />
             </a-form-item>
           </a-col>
 
           <a-col :span="8">
-            <a-form-item label="Horas Abril">
-                <a-time-picker
-                    v-model="formState.abril"
-                    format="HH:mm"
-                    placeholder="Selecione horas e minutos"
-                />
+            <a-form-item label="Horas Maio" >
+              <a-input v-model:value="formState.maio" placeholder="Digite as horas" />
             </a-form-item>
           </a-col>
         </a-row>  
 
         <a-row :gutter="[16, 16]">
           <a-col :span="8">
-            <a-form-item label="Horas Maio">
-                <a-time-picker
-                    v-model="formState.maio"
-                    format="HH:mm"
-                    placeholder="Selecione horas e minutos"
-                />
-            </a-form-item>
-          </a-col>
-
-          <a-col :span="8">
-            <a-form-item label="Horas Junho">
-                <a-time-picker
-                    v-model="formState.junho"
-                    format="HH:mm"
-                    placeholder="Selecione horas e minutos"
-                />
+            <a-form-item label="Horas Junho" >
+              <a-input v-model:value="formState.junho" placeholder="Digite as horas" />
             </a-form-item>
           </a-col>
         </a-row>  
@@ -188,65 +134,69 @@
   interface HorasFormState {
     nomeColaborador: string;
     filial: string;
-    junhoJulho: number;
-    agosto: number;
-    setembroOutubro: number;
-    novembro: number;
-    dezembro: number;
-    janeiro: number;
-    fevereiro: number;
-    marco: number;
-    abril: number;
-    maio: number;
-    junho: number;
+    junhoJulho: string;
+    agosto: string;
+    setembroOutubro: string;
+    novembro: string;
+    dezembro: string;
+    janeiro: string;
+    fevereiro: string;
+    marco: string;
+    abril: string;
+    maio: string;
+    junho: string;
+    total: string;
   }
   
   // Estado inicial do formulário
   const formState = reactive<HorasFormState>({
     nomeColaborador: '',
     filial: '',
-    junhoJulho: 0,
-    agosto: 0,
-    setembroOutubro: 0,
-    novembro: 0,
-    dezembro: 0,
-    janeiro: 0,
-    fevereiro: 0,
-    marco: 0,
-    abril: 0,
-    maio: 0,
-    junho: 0
+    junhoJulho: '',
+    agosto: '',
+    setembroOutubro: '',
+    novembro: '',
+    dezembro: '',
+    janeiro: '',
+    fevereiro: '',
+    marco: '',
+    abril: '',
+    maio: '',
+    junho: '',
+    total: '',
   });
 
   
-  // Função chamada no envio bem-sucedido do formulário
-  const onFinish = async () => {
-    try {
-      message.loading({ content: 'Enviando Hora Válida...' });
-      await store.dispatch('createHoraValida', {
-        nomeColaborador: formState.nomeColaborador,
-        filial: formState.filial,
-        junhoJulho: formState.junhoJulho,
-        agosto: formState.agosto,
-        setembroOutubro: formState.setembroOutubro,
-        novembro: formState.novembro,
-        dezembro: formState.dezembro,
-        janeiro: formState.janeiro,
-        fevereiro: formState.fevereiro,
-        marco: formState.marco,
-        abril: formState.abril,
-        maio: formState.maio,
-        junho: formState.junho
-      });
-      message.success({ content: 'Solicitação criada com sucesso!' });
-      setTimeout(() => {
-        router.push('/TelaHorasValidas')
-      }, 2000);
-    } catch (error) {
-      console.error('Erro ao criar hora válida:', error);
-      message.error({ content: 'Erro ao criar hora válida.' });
-    }
+    // Função chamada no envio bem-sucedido do formulário
+    const onFinish = async () => {
+      try {
+        message.loading({ content: 'Enviando Hora Válida...' });
+        await store.dispatch('createHoraValida', {
+          nomeColaborador: formState.nomeColaborador,
+          filial: formState.filial,
+          junhoJulho: formState.junhoJulho,
+          agosto: formState.agosto,
+          setembroOutubro: formState.setembroOutubro,
+          novembro: formState.novembro,
+          dezembro: formState.dezembro,
+          janeiro: formState.janeiro,
+          fevereiro: formState.fevereiro,
+          marco: formState.marco,
+          abril: formState.abril,
+          maio: formState.maio,
+          junho: formState.junho,
+          total: formState.total
+        });
+        message.success({ content: 'Solicitação criada com sucesso!' });
+        setTimeout(() => {
+          router.push('/TelaHorasValidas')
+        }, 2000);
+      } catch (error) {
+        console.error('Erro ao criar hora válida:', error);
+        message.error({ content: 'Erro ao criar hora válida.' });
+      }
   };
+
   
   // Função chamada no envio mal-sucedido do formulário
   const onFinishFailed = (errorInfo: any) => {

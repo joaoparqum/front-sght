@@ -225,6 +225,35 @@ const store = createStore({
                 console.log('Erro ao criar hora valida: ', error);
             }
         },
+        async fetchHoras ({ commit }: { state: State; commit: (mutation: string, payload?: any) => void }) {
+            try{
+                const token = localStorage.getItem('token');
+                const response = await axios.get(`http://localhost:8080/horas`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                commit('setHorasData', response.data);
+            } catch ( error ){
+                console.log('Erro ao mostrar horas válidas: ', error);
+            }
+        },
+        async deleteHoras (
+            { dispatch }: { dispatch: (action: string, payload?: any) => Promise<any> }, 
+            id: string) 
+        {
+            try{
+                const token = localStorage.getItem('token');
+                await axios.delete(`http://localhost:8080/horas/${id}`, {
+                    headers: {
+                        'Authorization': `Bearer ${token}`
+                    }
+                })
+                dispatch('fetchHoras');
+            } catch ( error ){
+                console.log('Erro ao deletar hora válida: ', error);
+            }
+        },
         async changeStatus(
             { dispatch }: { state: State; dispatch: (action: string, payload?: any) => Promise<any> },
             { id, status }: { id: string; status: string }
