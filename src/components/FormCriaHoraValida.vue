@@ -187,7 +187,7 @@
           junho: formState.junho,
           total: formState.total
         });
-        message.success({ content: 'Solicitação criada com sucesso!' });
+        message.success({ content: 'Hora Válida criada com sucesso!' });
         setTimeout(() => {
           router.push('/TelaHorasValidas')
         }, 2000);

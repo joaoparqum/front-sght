@@ -320,8 +320,19 @@ const store = createStore({
                 console.error('Erro ao atualizar a solicitação!', error);
             }
         },
-        async fetchSolicitacaoById({ id }:{ id: string }) 
-        {
+        async updateHoras( {dispatch}: { dispatch: (action: string, payload?: any) => Promise<any>}, 
+        { id, updatedData }: { id: string; updatedData: any} ) {
+            try {
+                const token = localStorage.getItem('token');
+                await axios.patch(`http://localhost:8080/horas/${id}`, updatedData, {
+                    headers: { 'Authorization': `Bearer ${token}`}
+                });
+                dispatch('fetchHoras');
+            } catch ( error ){
+                console.log('Erro ao atualizar a hora válida! ', error);
+            }
+        },
+        async fetchSolicitacaoById({ id }:{ id: string }) {
             try {
                 const token = localStorage.getItem('token');
                 const response = await axios.get(`http://localhost:8080/solicitacoes/${id}`, {
@@ -330,6 +341,17 @@ const store = createStore({
                 return response.data;
             } catch (error) {
                 console.log("Erro ao encontrar solicitação:", error);
+            }
+        },
+        async fetchHorasById({id}: {id: string}) {
+            try {
+                const token = localStorage.getItem('token');
+                const response = await axios.get(`http://localhost:8080/horas/${id}`, {
+                    headers: { 'Authorizarion': `Bearer ${token}`}
+                });
+                return response.data;
+            } catch ( error ) {
+                console.log('Erro ao encontrar hora válida: ', error);
             }
         }        
     },     

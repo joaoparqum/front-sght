@@ -18,7 +18,7 @@
     <a-table
       :columns="columns"
       :data-source="data"
-      :scroll="{ x: 1500, y: 300 }"
+      :scroll="{ x: 1500, y: 500 }"
       row-key="name"
       bordered
     >
@@ -90,13 +90,9 @@
     }
  };
 
- const editarHoraValida = async (id: number) => {
-    try{
-        await store.dispatch('editarHoras', id);
-        message.success('Hora válida editada com sucesso!');
-    } catch {
-        message.error('Erro ao editar hora válida!');
-    }
+ const editarHoraValida = async (id: string) => {
+    console.log('ID para edição:', id);
+    router.push({ path: '/EditaHora', query: { id: String(id) }});
  }
 
  const onSearch = async (nomeColaborador: string) => {
@@ -113,12 +109,12 @@
 
   const colorMap: { [key: string]: string } = {
     MATRIZ: 'geekblue',
-    SEABRA: 'green',
-    TINTASMC: 'orange',
-    ITABERABA: 'volcano',
-    MORRO: 'cyan',
-    JACOBINA: 'purple',
-    CONQUISTA: 'red',
+    SEABRA: 'geekblue',
+    TINTASMC: 'geekblue',
+    ITABERABA: 'geekblue',
+    MORRO: 'geekblue',
+    JACOBINA: 'geekblue',
+    CONQUISTA: 'geekblue',
   };
   
   // Colunas da tabela
