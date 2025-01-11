@@ -320,16 +320,25 @@ const store = createStore({
                 console.error('Erro ao atualizar a solicitação!', error);
             }
         },
-        async updateHoras( {dispatch}: { dispatch: (action: string, payload?: any) => Promise<any>}, 
-        { id, updatedData }: { id: string; updatedData: any} ) {
+        async updateHoras({ dispatch }: { dispatch: (action: string, payload?: any) => Promise<any> }, 
+        payload: any) 
+         {
             try {
+                console.log("esse: ", payload);
                 const token = localStorage.getItem('token');
-                await axios.patch(`http://localhost:8080/horas/${id}`, updatedData, {
-                    headers: { 'Authorization': `Bearer ${token}`}
+                if (!token) {
+                    throw new Error('Token não encontrado. Faça login novamente.');
+                }
+            
+                await axios.patch(`http://localhost:8080/horas/${payload.id}`, payload.updatedData,{
+                    headers: { Authorization: `Bearer ${token}` },
                 });
+                // Atualiza a lista de horas
                 dispatch('fetchHoras');
-            } catch ( error ){
-                console.log('Erro ao atualizar a hora válida! ', error);
+                console.log('Hora Válida atualizada com sucesso!');
+            } catch (error) {
+                console.error('Erro ao atualizar a hora válida:', error);
+                throw error; 
             }
         },
         async fetchSolicitacaoById({ id }:{ id: string }) {
@@ -343,22 +352,32 @@ const store = createStore({
                 console.log("Erro ao encontrar solicitação:", error);
             }
         },
-        async fetchHorasById({id}: {id: string}) {
+        async fetchHorasById({ dispatch }: { dispatch: (action: string, payload?: any) => Promise<any> }, 
+        payload: string) {
             try {
-                const token = localStorage.getItem('token');
-                const response = await axios.get(`http://localhost:8080/horas/${id}`, {
-                    headers: { 'Authorizarion': `Bearer ${token}`}
-                });
-                return response.data;
-            } catch ( error ) {
-                console.log('Erro ao encontrar hora válida: ', error);
+            
+              const token = localStorage.getItem('token');
+          
+              if (!token) {
+                throw new Error('Token não encontrado. Faça login novamente.');
+              }
+          
+              const response = await axios.get(`http://localhost:8080/horas/${payload.id}`, {
+                headers: { Authorization: `Bearer ${token}` }  // Corrigido "Authorizarion" para "Authorization"
+              });
+          
+              return response.data;
+            } catch (error) {
+              console.log('Erro ao encontrar hora válida: ', error);
+              throw error; // Re-lançando o erro para ser tratado no componente
             }
-        }        
+        }    
     },     
     getters: {
         flightData: (state: State) => state.data,
         documentUrl: (state: State) => state.document,
-        novasSolicitacoes: (state: State) => state.novasSolicitacoes
+        novasSolicitacoes: (state: State) => state.novasSolicitacoes,
+        token: (state: State) => state.token
     },
 });
 

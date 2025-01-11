@@ -7,7 +7,6 @@ import HomeScreen from '../components/HomeScreen.vue';
 import TelaEditaSolicitacao from '../components/TelaEditaSolicitacao.vue';
 import TelaHorasValidas from '../components/TelaHorasValidas.vue';
 import TelaCriaHoraValida from '../components/TelaCriaHoraValida.vue';
-import TelaEditaHoraValida from '../components/TelaEditaHoraValida.vue';
 
 const routes = [
     { path: '/', component: Home },
@@ -17,7 +16,6 @@ const routes = [
     { path: '/CriaHoraValida', component: TelaCriaHoraValida},
     { path: '/TelaSolicitacao', component: TelaSolicitacoes},
     { path: '/EditaSolicitacao', component: TelaEditaSolicitacao},
-    { path: '/EditaHora', component: TelaEditaHoraValida},
     { path: '/TelaHorasValidas', component: TelaHorasValidas}
 ];
   

@@ -92,7 +92,7 @@
     </a-layout>
   </template>
   
-  <script lang="ts" setup>
+<script lang="ts" setup>
     import { useStore } from 'vuex';
     import { message } from 'ant-design-vue';
     import { useRouter } from 'vue-router';
@@ -161,9 +161,9 @@
       console.log('Usuário carregado:', role);
       return role === 'admin';
     });*/
-  </script>
+</script>
   
-  <style scoped>
+<style scoped>
 
     #components-layout-demo-fixed .logo {
       width: 120px;
@@ -277,6 +277,6 @@
 
     .bell-container{
       margin-right: 5px;
+      cursor: pointer;
     }
-
 </style>
