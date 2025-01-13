@@ -38,7 +38,7 @@
             <a-button 
               type="primary" 
               size="small" 
-              @click="editarSolicitacao(record.id)"
+              @click="openEditModal(record.id)"
               class="visualizer-button"
             >
               <EditOutlined />
@@ -49,6 +49,7 @@
               <a-button 
                 type="primary" 
                 size="small" 
+                danger
                 @click="deleteSolicitacao(record.id)"
                 class="delete-button"
               >
@@ -59,16 +60,32 @@
           </template>
         </template>
       </a-table>
+
+
+      <a-modal v-model:open="editModalOpen" title="Editar" @ok="handleEditOk(formData.id, formData)" @cancel="handleEditCancel">
+        <FormEditarSolicitacao :formData="formData" />
+      </a-modal>
+
     </div>
-  </template>
+</template>
   
 <script lang="ts" setup>
     import { ref, computed, onMounted, watch } from 'vue';
     import { useStore } from 'vuex';
     import { useRouter } from 'vue-router';
     import { message } from 'ant-design-vue';
-    import { DeleteOutlined, FileAddOutlined, UserAddOutlined, EditOutlined } from '@ant-design/icons-vue';
+    import { DeleteOutlined, FileAddOutlined, EditOutlined } from '@ant-design/icons-vue';
+    import FormEditarSolicitacao from './FormEditarSolicitacao.vue';
     
+    const editModalOpen = ref(false);
+    const formData = ref({
+      id: '',
+      data: '',
+      motivo: '',
+      horasSolicitadas: '',
+    });
+    const updatedData = { ...formData.value };
+
     // Router e Store
     const router = useRouter();
     const store = useStore();
@@ -113,11 +130,44 @@
                 return 'blue';
         }
     };
-    
-    // Ações
-    const editarSolicitacao = (id: string) => {
-        router.push(`/EditaSolicitacao/${id}`);
-    };
+
+    const openEditModal = async (id: string) => {
+      console.log('ID passado:', id);
+
+      if (!id) {
+          console.error('ID não encontrado');
+          return;
+      }
+
+      try {
+          const dadosParaEditar = await store.dispatch('fetchSolicitacaoById', {id} );
+          formData.value = { ...dadosParaEditar };
+          editModalOpen.value = true;
+      } catch (error) {
+          console.error('Erro ao carregar os dados:', error);
+      }
+   };
+
+   const handleEditCancel = () => {
+    editModalOpen.value = false;
+  };
+
+  const handleEditOk = async ( id: string, updatedData: any ) => {
+    try {
+        // Os dados do formulário (já modificados no modal)
+        console.log(updatedData);
+
+        // Lógica para enviar os dados ao store ou outro lugar
+        await store.dispatch('updateSolicitacao', { id, updatedData });
+
+        // Mensagem de sucesso e fechamento do modal
+        message.success('Dados atualizados com sucesso!');
+        editModalOpen.value = false;
+    } catch (error) {
+        console.error('Erro ao salvar as alterações:', error);
+        message.error('Erro ao editar os dados.');
+    }
+  };
     
     const deleteSolicitacao = async (id: number) => {
         try {

@@ -147,7 +147,6 @@
 </template>
 
 <script lang="ts" setup>
-  import { defineProps } from 'vue';
 
   // Definindo que formData será passado como uma prop
   const props = defineProps({

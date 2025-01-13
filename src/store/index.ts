@@ -312,10 +312,18 @@ const store = createStore({
             }
         },
         async updateSolicitacao({ dispatch }: { dispatch: (action: string, payload?: any) => Promise<any> }, 
-        { id, updatedData }: { id: string; updatedData: any }) {
+        payload: any) {
             try {
-                await axios.put(`http://localhost:8080/solicitacoes/${id}`, updatedData);
-                dispatch('fetchSolicitacoesById');
+                const token = localStorage.getItem('token');
+                if(!token) {
+                    throw new Error('Token não encontrado. Faça login novamente.');
+                }
+
+                await axios.patch(`http://localhost:8080/solicitacoes/${payload.id}`, payload.updatedData, {
+                    headers: { Authorization: `Bearer ${token}`},
+                });
+                dispatch('fetchSolicitacoesByUser');
+                console.log("Solicitação atualizada com sucesso!");
             } catch (error) {
                 console.error('Erro ao atualizar a solicitação!', error);
             }
@@ -324,7 +332,6 @@ const store = createStore({
         payload: any) 
          {
             try {
-                console.log("esse: ", payload);
                 const token = localStorage.getItem('token');
                 if (!token) {
                     throw new Error('Token não encontrado. Faça login novamente.');
@@ -333,7 +340,7 @@ const store = createStore({
                 await axios.patch(`http://localhost:8080/horas/${payload.id}`, payload.updatedData,{
                     headers: { Authorization: `Bearer ${token}` },
                 });
-                // Atualiza a lista de horas
+                
                 dispatch('fetchHoras');
                 console.log('Hora Válida atualizada com sucesso!');
             } catch (error) {
@@ -341,10 +348,11 @@ const store = createStore({
                 throw error; 
             }
         },
-        async fetchSolicitacaoById({ id }:{ id: string }) {
+        async fetchSolicitacaoById({}: { dispatch: (action: string, payload?: any) => Promise<any> }, 
+        payload: string) {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get(`http://localhost:8080/solicitacoes/${id}`, {
+                const response = await axios.get(`http://localhost:8080/solicitacoes/${payload.id}`, {
                     headers: { 'Authorization': `Bearer ${token}` },
                 });
                 return response.data;
@@ -352,7 +360,7 @@ const store = createStore({
                 console.log("Erro ao encontrar solicitação:", error);
             }
         },
-        async fetchHorasById({ dispatch }: { dispatch: (action: string, payload?: any) => Promise<any> }, 
+        async fetchHorasById({}: { dispatch: (action: string, payload?: any) => Promise<any> }, 
         payload: string) {
             try {
             
