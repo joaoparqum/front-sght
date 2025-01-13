@@ -1,4 +1,5 @@
 <template>
+  
     <div style="display: flex; justify-content: center; align-items: center;">
       <a-form
         :model="formState"
@@ -41,9 +42,26 @@
         </a-form-item>
   
         <br><br>
-        <a-form-item>
-          <a-button type="primary" html-type="submit">Cadastrar</a-button>
-        </a-form-item>
+        <a-row :gutter="[16, 16]">
+          <a-col :span="8">
+            <a-form-item>
+              <a-button type="primary" html-type="submit" class="register-button">
+                <FileAddOutlined />
+                Cadastrar
+              </a-button>
+            </a-form-item>
+          </a-col>  
+
+          <a-col :span="8">
+            <a-button 
+              type="primary" 
+              @click="navegarParaHomescreen"
+            >
+              <SwapLeftOutlined />
+              Voltar para tela inicial
+            </a-button>
+          </a-col>  
+        </a-row>  
       </a-form>
     </div>
   </template>
@@ -52,8 +70,11 @@
     import { reactive, ref } from 'vue';
     import { useStore } from 'vuex';
     import { message, type SelectProps } from 'ant-design-vue';
+    import { FileAddOutlined, SwapLeftOutlined } from '@ant-design/icons-vue';
+    import { useRouter } from 'vue-router';
   
     const store = useStore();
+    const router = useRouter();
   
     interface FormState {
       username: string;
@@ -104,4 +125,16 @@
     const filterOption = (input: string, option: any) => {
       return option.value.toLowerCase().indexOf(input.toLowerCase()) >= 0;
     };
+
+    const navegarParaHomescreen = () => {
+        router.push('/HomeScreen');
+    };
   </script>
+
+<style>
+
+.register-button{
+  margin-right: 30px;
+}
+
+</style>

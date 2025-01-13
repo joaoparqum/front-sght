@@ -270,6 +270,38 @@ const store = createStore({
               console.log("Erro ao buscar documento pelo nome!");
             }
         },
+        async searchSolicitacoesByName(
+            { commit }: { commit: (mutation: string, payload?: any) => void }, 
+            login: string) 
+        {
+            try {
+              const token = localStorage.getItem('token');
+              const response = await axios.get(`http://localhost:8080/solicitacoes/nome/${login}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+              });
+              commit('setData', response.data);
+            } catch (error) {
+              console.log("Erro ao buscar documento pelo nome!");
+            }
+        },
+        async searchSolicitacoesByMotivo(
+            { commit }: { commit: (mutation: string, payload?: any) => void }, 
+            motivo: string) 
+        {
+            try {
+              const token = localStorage.getItem('token');
+              const response = await axios.get(`http://localhost:8080/solicitacoes/motivo/${motivo}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+              });
+              commit('setData', response.data);
+            } catch (error) {
+              console.log("Erro ao buscar documento pelo nome!");
+            }
+        },
         async changeStatus(
             { dispatch }: { state: State; dispatch: (action: string, payload?: any) => Promise<any> },
             { id, status }: { id: string; status: string }

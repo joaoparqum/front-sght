@@ -9,6 +9,28 @@
         <h1 class="header-title">SGHT</h1>
       </div>  
       <div style="display: flex; align-items: center; gap: 10px;">
+
+          <div class="bell-container">
+            <a-badge :count="novasSolicitacoes.length">
+              <a-popover 
+                placement="leftBottom"
+                
+              >
+                <template #content>
+                  <ul>
+                    <li v-for="solicitacao in novasSolicitacoes" :key="solicitacao.id">
+                      Colaborador: {{ solicitacao.userLogin }} - Motivo: {{ solicitacao.motivo }} - Horas:  {{ solicitacao.horasSolicitadas }}
+                    </li>
+                  </ul>
+                  <a-button type="primary" @click="marcarTodasComoVistas">Marcar todas como vistas</a-button>
+                </template>
+                <template #title>
+                  <span>Novas Solicitações!</span>
+                </template>
+                <img src="/bell.png" class="bell">
+              </a-popover>
+            </a-badge>
+          </div>
         <p class="header-greeting">Olá, {{ username }}!</p>
         <a-button 
           type="primary" 
@@ -42,17 +64,28 @@ import { useStore } from 'vuex';
 import { message } from 'ant-design-vue';
 import { useRouter } from 'vue-router';
 import { LogoutOutlined } from '@ant-design/icons-vue';
-import { onMounted, ref } from 'vue';
+import { computed, onMounted, ref } from 'vue';
 import FormCriaUsuario from './FormCriaUsuario.vue';
 
 const router = useRouter();
 const store = useStore();
 const currentYear = ref(new Date().getFullYear());
 const username = ref<string | null>(null);
+const novasSolicitacoes = computed(() => store.state.novasSolicitacoes || []);
 
 onMounted(() => {
       username.value = localStorage.getItem('login');
+      store.dispatch('fetchNovasSolicitacoes');
 });
+
+setInterval(() => {
+  store.dispatch('fetchNovasSolicitacoes');
+}, 60000);
+
+const marcarTodasComoVistas = async () => {
+    await store.dispatch('marcarNotificacoesComoVistas');
+    message.success('Notificações marcadas como vistas.');
+};
 
 const fazerLogout = () => {
   store.dispatch('logout');
@@ -117,4 +150,13 @@ const fazerLogout = () => {
     font-size: 6px;
   }
 }
+
+    .bell{
+      width: 32px;
+    }
+
+    .bell-container{
+      margin-right: 5px;
+      cursor: pointer;
+    }
 </style>

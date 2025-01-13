@@ -3,9 +3,17 @@
       <a-button 
         type="primary" 
         @click="navegarParaAdicionarHoraValida"
+        class="adiciona-button"
       >
         <FileAddOutlined />
         Adicionar Hora Válida
+      </a-button>
+      <a-button 
+        type="primary" 
+        @click="navegarParaHomescreen"
+      >
+        <SwapLeftOutlined />
+        Voltar para tela inicial
       </a-button>
       <br/><br/>
       <a-input-search
@@ -66,7 +74,7 @@
 <script lang="ts" setup>
   import { computed, onMounted, reactive, ref, type Ref } from 'vue';
   import { message, type TableColumnsType } from 'ant-design-vue';
-  import { DeleteOutlined, EditOutlined, FileAddOutlined } from '@ant-design/icons-vue';
+  import { DeleteOutlined, EditOutlined, FileAddOutlined, SwapLeftOutlined } from '@ant-design/icons-vue';
   import { useRouter } from 'vue-router';
   import { useStore } from 'vuex';
   import FormEditaHoras from './FormEditaHoras.vue';
@@ -100,6 +108,10 @@
     router.push('/CriaHoraValida');
   };
   
+  const navegarParaHomescreen = () => {
+        router.push('/HomeScreen');
+  };
+
   onMounted(() => {
     store.dispatch('fetchHoras');
   });
@@ -192,4 +204,11 @@
     { title: 'Total', dataIndex: 'total', key: 'total', fixed: 'right' },
     { title: 'Ação', key: 'operation', fixed: 'right' },
   ];
-</script>  
+</script>   
+
+<style>
+
+  .adiciona-button{
+    margin-right: 5px;
+  }
+</style>

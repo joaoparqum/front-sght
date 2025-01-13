@@ -105,7 +105,7 @@
     const onSearch = async (motivo: string) => {
         if (searchTerm.value) {
             try {
-                await store.dispatch('searchSolicitacaoByMotivo', motivo);
+                await store.dispatch('searchSolicitacoesByMotivo', motivo);
             } catch {
                 message.error('Erro ao buscar solicitações. Verifique o termo digitado.');
             }

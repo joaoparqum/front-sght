@@ -3,24 +3,11 @@
       <!-- Botão para adicionar solicitação -->
       <a-button 
         type="primary" 
-        @click="navegarParaAdicionarSolicitacao"
-        v-if="isAdmin"
+        @click="navegarParaHomescreen"
       >
-        <FileAddOutlined />
-        Adicionar Solicitação
+        <SwapLeftOutlined />
+        Voltar para tela inicial
       </a-button>
-  
-      <!-- Botão para registrar usuário -->
-      <a-button 
-        v-if="isAdmin" 
-        type="primary" 
-        @click="cadastrarUsuario"
-        class="register-button"
-      >
-        <UserAddOutlined />
-        Registrar Colaborador
-      </a-button>
-  
       <br /><br />
       <!-- Campo de pesquisa -->
       <a-input-search
@@ -77,7 +64,7 @@
     import { useStore } from 'vuex';
     import { useRouter } from 'vue-router';
     import { message } from 'ant-design-vue';
-    import { FileAddOutlined, UserAddOutlined } from '@ant-design/icons-vue';
+    import { FileAddOutlined, SwapLeftOutlined, UserAddOutlined } from '@ant-design/icons-vue';
     
     // Router e Store
     const router = useRouter();
@@ -91,8 +78,8 @@
     const isAdmin = computed(() => localStorage.getItem('role') === 'admin');
     
     // Funções auxiliares
-    const navegarParaAdicionarSolicitacao = () => {
-        router.push('/CriaSolicitacao');
+    const navegarParaHomescreen = () => {
+        router.push('/HomeScreen');
     };
     
     const cadastrarUsuario = () => {
@@ -120,10 +107,10 @@
         }
     };
     
-    const onSearch = async (motivo: string) => {
+    const onSearch = async (login: string) => {
         if (searchTerm.value) {
             try {
-                await store.dispatch('searchSolicitacaoByMotivo', motivo);
+                await store.dispatch('searchSolicitacoesByName', login);
             } catch {
                 message.error('Erro ao buscar solicitações. Verifique o termo digitado.');
             }
