@@ -82,6 +82,7 @@
       id: '',
       data: '',
       motivo: '',
+      comprovanteArquivo: '',
       horasSolicitadas: '',
     });
     const updatedData = { ...formData.value };
@@ -131,7 +132,7 @@
         }
     };
 
-    const openEditModal = async (id: string) => {
+  const openEditModal = async (id: string) => {
       console.log('ID passado:', id);
 
       if (!id) {
@@ -146,9 +147,9 @@
       } catch (error) {
           console.error('Erro ao carregar os dados:', error);
       }
-   };
+  };
 
-   const handleEditCancel = () => {
+  const handleEditCancel = () => {
     editModalOpen.value = false;
   };
 
@@ -215,6 +216,12 @@
             dataIndex: 'motivo',
             key: 'motivo',
             width: 200,
+        },
+        {
+            title: 'Comprovante',
+            dataIndex: 'comprovanteArquivo',
+            key: 'comprovanteArquivo',
+            width: 200
         },
         {
             title: 'Horas Solicitadas',

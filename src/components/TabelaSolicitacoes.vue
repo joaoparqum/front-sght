@@ -64,7 +64,7 @@
     import { useStore } from 'vuex';
     import { useRouter } from 'vue-router';
     import { message } from 'ant-design-vue';
-    import { FileAddOutlined, SwapLeftOutlined, UserAddOutlined } from '@ant-design/icons-vue';
+    import { SwapLeftOutlined } from '@ant-design/icons-vue';
     
     // Router e Store
     const router = useRouter();
@@ -193,6 +193,12 @@
             dataIndex: 'motivo',
             key: 'motivo',
             width: 200,
+        },
+        {
+            title: 'Comprovante',
+            dataIndex: 'comprovanteArquivo',
+            key: 'comprovanteArquivo',
+            width: 200
         },
         {
             title: 'Horas Solicitadas',

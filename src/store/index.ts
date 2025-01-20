@@ -171,27 +171,31 @@ const store = createStore({
         },
         async createSolicitacao(
             { dispatch }: { dispatch: (action: string, payload?: any) => Promise<any> },
-            payload: { data: string; motivo: string; horasSolicitadas: number }
+            payload: { data: string; motivo: string; horasSolicitadas: number; comprovanteArquivo: File }
         ) {
             try {
-                const token = localStorage.getItem('token'); // Recupera o token do localStorage
-                await axios.post(
-                    `http://localhost:8080/solicitacoes`,
-                    {
-                        data: payload.data,
-                        motivo: payload.motivo,
-                        horasSolicitadas: payload.horasSolicitadas,
-                    },
-                    {
-                        headers: {
-                            'Authorization': `Bearer ${token}`, // Inclui o token no cabeçalho
-                        },
-                    }
-                );
-                console.log('Solicitação criada com sucesso!');
-                await dispatch('fetchSolicitacoes');
+              const token = localStorage.getItem('token'); 
+          
+              const formData = new FormData();
+              formData.append('data', payload.data);
+              formData.append('motivo', payload.motivo);
+              formData.append('horasSolicitadas', payload.horasSolicitadas.toString());
+              formData.append('comprovanteArquivo', payload.comprovanteArquivo); // Adiciona o arquivo
+          
+              // Envia a solicitação com FormData
+              await axios.post(`http://localhost:8080/solicitacoes`, formData,
+                {
+                  headers: {
+                    'Authorization': `Bearer ${token}`, // Inclui o token no cabeçalho
+                    'Content-Type': 'multipart/form-data', // Define o tipo correto
+                  },
+                }
+              );
+          
+              console.log('Solicitação criada com sucesso!');
+              await dispatch('fetchSolicitacoes'); // Atualiza a lista de solicitações
             } catch (error) {
-                console.error('Erro ao criar solicitação: ', error);
+              console.error('Erro ao criar solicitação: ', error);
             }
         },   
         async createHoraValida( { dispatch }: { dispatch: (action: string, payload?: any) => Promise<any> }, horas: {nomeColaborador: string, filial: string, junhoJulho: number, agosto: number, setembroOutubro: number, novembro: number, dezembro: number, janeiro: number, fevereiro: number, marco: number,

@@ -30,6 +30,24 @@
         >
           <a-input v-model:value="formState.motivo" />
         </a-form-item>
+
+        <!--Campo Comprovação-->
+        <a-form-item
+           label="Comprovação"
+           name="comprovanteArquivo"
+           :rules="[{ required : true, message: 'Insira a comprovação!' }]"
+        >
+          <a-upload
+            :before-upload="handleFileUpload"
+            :max-count="1"
+            :show-upload-list="true"
+          >
+            <a-button>
+              <UploadOutlined/>
+              Enviar arquivo
+            </a-button>
+          </a-upload>   
+        </a-form-item>
   
         <!-- Campo Horas Solicitadas -->
         <a-form-item
@@ -59,6 +77,7 @@
   import { useStore } from 'vuex';
   import { useRouter } from 'vue-router';
   import { message } from 'ant-design-vue';
+  import { UploadOutlined } from '@ant-design/icons-vue';
   
   const store = useStore();
   const router = useRouter();
@@ -67,6 +86,7 @@
   interface SolicitacaoFormState {
     data: string;
     motivo: string;
+    comprovanteArquivo: File | null;
     horasSolicitadas: number | null;
   }
   
@@ -74,14 +94,21 @@
   const formState = reactive<SolicitacaoFormState>({
     data: '',
     motivo: '',
+    comprovanteArquivo: null as File | null,
     horasSolicitadas: null,
   });
 
   const resetForm = () => {
     formState.data = '';
     formState.motivo = '';
+    formState.comprovanteArquivo = null;
     formState.horasSolicitadas = null;
   };
+
+  const handleFileUpload = (comprovanteArquivo: File) => {
+    formState.comprovanteArquivo = comprovanteArquivo;
+    return false;
+  }
   
   // Função chamada no envio bem-sucedido do formulário
   const onFinish = async () => {
@@ -91,6 +118,7 @@
         data: formState.data,
         motivo: formState.motivo,
         horasSolicitadas: formState.horasSolicitadas,
+        comprovanteArquivo: formState.comprovanteArquivo
       });
       message.success({ content: 'Solicitação criada com sucesso!' });
       resetForm(); // Resetando o formulário
