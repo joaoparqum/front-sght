@@ -47,7 +47,7 @@
               <EditOutlined />
               Editar
             </a-button>
-            <a-divider type="vertical" />
+            <a-divider type="horizontal" />
             <a-button 
               type="primary"  
               size="small"
@@ -189,7 +189,7 @@
   const columns: TableColumnsType = [
     { title: 'ID', dataIndex: 'id', key: 'id', fixed: 'left'},
     { title: 'Nome', dataIndex: 'nomeColaborador', key: 'nomeColaborador', fixed: 'left' },
-    { title: 'Filial', dataIndex: 'filial', key: 'filial', fixed: 'left' },
+    { title: 'Filial', dataIndex: 'filial', key: 'filial', width: 130, fixed: 'left' },
     { title: 'Jun/Jul', dataIndex: 'junhoJulho', key: 'junhoJulho' },
     { title: 'Ago', dataIndex: 'agosto', key: 'agosto' },
     { title: 'Set/Out', dataIndex: 'setembroOutubro', key: 'setembroOutubro' },

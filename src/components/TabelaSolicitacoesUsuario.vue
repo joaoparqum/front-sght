@@ -34,6 +34,9 @@
               {{ record.status }}
             </a-tag>
           </template>
+          <template v-if="column.key === 'comprovante'">
+            {{ record.comprovante.nomeArquivo }}
+          </template>
           <template v-else-if="column.key === 'action'">
             <a-button 
               type="primary" 
@@ -82,7 +85,7 @@
       id: '',
       data: '',
       motivo: '',
-      comprovanteArquivo: '',
+      comprovante: '',
       horasSolicitadas: '',
     });
     const updatedData = { ...formData.value };
@@ -219,8 +222,8 @@
         },
         {
             title: 'Comprovante',
-            dataIndex: 'comprovanteArquivo',
-            key: 'comprovanteArquivo',
+            dataIndex: 'comprovante',
+            key: 'comprovante',
             width: 200
         },
         {
@@ -238,7 +241,7 @@
         {
             title: 'Ação',
             key: 'action',
-            width: 200,
+            width: 400,
         },
     ];
 </script>

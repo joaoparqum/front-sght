@@ -29,6 +29,11 @@
           <template v-if="column.key === 'data'">
             <span>{{ formatDate(record.data) }}</span>
           </template>
+
+          <template v-if="column.key === 'comprovante'">
+            <a @click="openDocumentByName(record.comprovante.id)">{{ record.comprovante.nomeArquivo }}</a>
+          </template>
+
           <template v-else-if="column.key === 'status'">
             <a-tag :color="getStatusColor(record.status)">
               {{ record.status }}
@@ -76,7 +81,23 @@
     
     // Verificar se o usuário é admin
     const isAdmin = computed(() => localStorage.getItem('role') === 'admin');
-    
+
+    const openDocumentByName = async (documentId: string) => {
+      message.loading({ content: 'Carregando documento...' });
+      await store.dispatch('fetchDocumentByCode', { DocumentCode: documentId });
+        const documentUrl = store.getters.documentUrl;
+
+        if (documentUrl) {
+          window.open(documentUrl, '_blank');
+        } else {
+          console.error('URL do documento não encontrado!');
+          message.error('Erro na abertura do documento!');
+        }
+      setTimeout(() => {
+        message.success({ content: 'Documento carregado!', duration: 2 });
+      }, 1000);
+    };
+
     // Funções auxiliares
     const navegarParaHomescreen = () => {
         router.push('/HomeScreen');
@@ -196,8 +217,8 @@
         },
         {
             title: 'Comprovante',
-            dataIndex: 'comprovanteArquivo',
-            key: 'comprovanteArquivo',
+            dataIndex: 'comprovante',
+            key: 'comprovante',
             width: 200
         },
         {
@@ -215,7 +236,7 @@
         {
             title: 'Ação',
             key: 'action',
-            width: 200,
+            width: 300,
         },
     ];
 </script>

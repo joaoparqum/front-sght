@@ -415,7 +415,31 @@ const store = createStore({
               console.log('Erro ao encontrar hora válida: ', error);
               throw error; // Re-lançando o erro para ser tratado no componente
             }
-        }    
+        },
+        async fetchDocumentByCode(
+            { commit }: { commit: (mutation: string, payload?: any) => void },
+            { DocumentCode }: { DocumentCode: string})
+        {
+            try {
+              const token = localStorage.getItem('token');  
+              const response = await axios.get(`http://localhost:8080/comprovante/view/${DocumentCode}`, {
+                responseType: 'blob', 
+                headers: { 
+                    Authorization: `Bearer ${token}`
+                }
+              });
+          
+              const blob = new Blob([response.data], { type: response.headers['content-type'] || '' });
+              const documentUrl = window.URL.createObjectURL(blob);
+      
+              commit('setDocument', documentUrl);
+              return documentUrl;
+            } catch (error) {
+              console.error('Erro ao carregar o conteúdo do documento:', error);
+              commit('setDocument', null);
+              throw new Error('Erro ao carregar o conteúdo do documento!');
+            }
+        },    
     },     
     getters: {
         flightData: (state: State) => state.data,
