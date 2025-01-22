@@ -48,7 +48,7 @@
               Editar
             </a-button>
             <span>
-              <a-divider type="vertical" />
+              <a-divider type="horizontal" />
               <a-button 
                 type="primary" 
                 size="small" 
@@ -241,7 +241,7 @@
         {
             title: 'Ação',
             key: 'action',
-            width: 400,
+            width: 100,
         },
     ];
 </script>

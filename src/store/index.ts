@@ -171,7 +171,7 @@ const store = createStore({
         },
         async createSolicitacao(
             { dispatch }: { dispatch: (action: string, payload?: any) => Promise<any> },
-            payload: { data: string; motivo: string; horasSolicitadas: number; comprovanteArquivo: File }
+            payload: { data: string; motivo: string; horasSolicitadas: number; comprovante: File }
         ) {
             try {
               const token = localStorage.getItem('token'); 
@@ -180,8 +180,11 @@ const store = createStore({
               formData.append('data', payload.data);
               formData.append('motivo', payload.motivo);
               formData.append('horasSolicitadas', payload.horasSolicitadas.toString());
-              formData.append('comprovanteArquivo', payload.comprovanteArquivo); // Adiciona o arquivo
+              formData.append('comprovante', payload.comprovante); // Adiciona o arquivo
           
+              // Verifica se o arquivo foi realmente adicionado ao FormData
+              console.log(formData.get('comprovante'));  
+
               // Envia a solicitação com FormData
               await axios.post(`http://localhost:8080/solicitacoes`, formData,
                 {
@@ -385,7 +388,7 @@ const store = createStore({
             }
         },
         async fetchSolicitacaoById({}: { dispatch: (action: string, payload?: any) => Promise<any> }, 
-        payload: string) {
+        payload: any) {
             try {
                 const token = localStorage.getItem('token');
                 const response = await axios.get(`http://localhost:8080/solicitacoes/${payload.id}`, {
@@ -397,7 +400,7 @@ const store = createStore({
             }
         },
         async fetchHorasById({}: { dispatch: (action: string, payload?: any) => Promise<any> }, 
-        payload: string) {
+        payload: any) {
             try {
             
               const token = localStorage.getItem('token');

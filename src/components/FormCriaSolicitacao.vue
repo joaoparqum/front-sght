@@ -34,13 +34,13 @@
         <!--Campo Comprovação-->
         <a-form-item
            label="Comprovação"
-           name="comprovanteArquivo"
-           :rules="[{ required : true, message: 'Insira a comprovação!' }]"
+           name="comprovante"
         >
           <a-upload
             :before-upload="handleFileUpload"
             :max-count="1"
             :show-upload-list="true"
+            :file-list="fileList"
           >
             <a-button>
               <UploadOutlined/>
@@ -66,27 +66,29 @@
   
         <br /><br />
         <a-form-item>
-          <a-button type="primary" html-type="submit">Cadastrar Solicitação</a-button>
+          <a-button type="primary" html-type="submit">Enviar Solicitação</a-button>
         </a-form-item>
       </a-form>
     </div>
-  </template>
+</template>
   
 <script lang="ts" setup>
-  import { reactive } from 'vue';
+  import { reactive, ref } from 'vue';
   import { useStore } from 'vuex';
   import { useRouter } from 'vue-router';
-  import { message } from 'ant-design-vue';
+  import { message, type UploadFile } from 'ant-design-vue';
   import { UploadOutlined } from '@ant-design/icons-vue';
+  import { format } from 'date-fns';
   
   const store = useStore();
   const router = useRouter();
+  const fileList = ref<File[]>([]);
   
   // Interface para o estado do formulário
   interface SolicitacaoFormState {
     data: string;
     motivo: string;
-    comprovanteArquivo: File | null;
+    comprovante: File | null;
     horasSolicitadas: number | null;
   }
   
@@ -94,33 +96,42 @@
   const formState = reactive<SolicitacaoFormState>({
     data: '',
     motivo: '',
-    comprovanteArquivo: null as File | null,
+    comprovante: null,
     horasSolicitadas: null,
   });
 
   const resetForm = () => {
     formState.data = '';
     formState.motivo = '';
-    formState.comprovanteArquivo = null;
+    formState.comprovante = null;
     formState.horasSolicitadas = null;
   };
 
-  const handleFileUpload = (comprovanteArquivo: File) => {
-    formState.comprovanteArquivo = comprovanteArquivo;
-    return false;
-  }
+  const handleFileUpload = (file: File) => {
+    formState.comprovante = file;
+    fileList.value = [file];
+    return false; // Impede o upload automático
+  };
   
   // Função chamada no envio bem-sucedido do formulário
   const onFinish = async () => {
     try {
+      if (!formState.comprovante) {
+        message.error({ content: 'Por favor, insira o comprovante!' });
+        return;
+      }
+
+      const payload = {
+            ...formState,
+            data: format(new Date(formState.data), "yyyy-MM-dd'T'HH:mm:ss")
+      };
+
+      console.log('payload: ', payload);
+
       message.loading({ content: 'Enviando solicitação...' });
-      await store.dispatch('createSolicitacao', {
-        data: formState.data,
-        motivo: formState.motivo,
-        horasSolicitadas: formState.horasSolicitadas,
-        comprovanteArquivo: formState.comprovanteArquivo
-      });
+      await store.dispatch('createSolicitacao', payload);
       message.success({ content: 'Solicitação criada com sucesso!' });
+
       resetForm(); // Resetando o formulário
       setTimeout(() => {
         router.push('/TelaSolicitacao')
