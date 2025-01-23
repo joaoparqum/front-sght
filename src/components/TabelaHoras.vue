@@ -24,46 +24,48 @@
       />
       <br /><br />
   
-      <a-table
-        :columns="columns"
-        :data-source="data"
-        :scroll="{ x: 1500, y: 500 }"
-        row-key="name"
-        bordered
-      >
-        <template #bodyCell="{ column, record }">
-          <template v-if="column.dataIndex === 'filial'">
-            <a-tag :color="colorMap[record.filial] || 'default'">
-              {{ record.filial }}
-            </a-tag>
+      <div class="table-container">
+        <a-table
+          :columns="columns"
+          :data-source="data"
+          :scroll="{ x: 1500, y: 500 }"
+          row-key="name"
+          bordered
+        >
+          <template #bodyCell="{ column, record }">
+            <template v-if="column.dataIndex === 'filial'">
+              <a-tag :color="colorMap[record.filial] || 'default'">
+                {{ record.filial }}
+              </a-tag>
+            </template>
+            <template v-else-if="column.key === 'operation'">
+              <a-button 
+                type="primary" 
+                size="small" 
+                @click="openEditModal(record.id)"
+                class="visualizer-button"
+              >
+                <EditOutlined />
+                Editar
+              </a-button>
+              <a-divider type="horizontal" />
+              <a-button 
+                type="primary"  
+                size="small"
+                danger 
+                @click="deleteHoraValida(record.id)"
+              >
+                <DeleteOutlined />
+                Deletar
+              </a-button>
+            </template>
+            <template v-else>
+              {{ record[column.dataIndex] }}
+            </template>
           </template>
-          <template v-else-if="column.key === 'operation'">
-            <a-button 
-              type="primary" 
-              size="small" 
-              @click="openEditModal(record.id)"
-              class="visualizer-button"
-            >
-              <EditOutlined />
-              Editar
-            </a-button>
-            <a-divider type="horizontal" />
-            <a-button 
-              type="primary"  
-              size="small"
-              danger 
-              @click="deleteHoraValida(record.id)"
-            >
-              <DeleteOutlined />
-              Deletar
-            </a-button>
-          </template>
-          <template v-else>
-            {{ record[column.dataIndex] }}
-          </template>
-        </template>
-      </a-table>
-  
+        </a-table>
+      </div>
+
       <!-- Modal de edição -->
       <a-modal v-model:open="editModalOpen" title="Editar" @ok="handleEditOk(formData.id, formData)" @cancel="handleEditCancel">
         <FormEditaHoras :formData="formData" />
@@ -204,11 +206,12 @@
     { title: 'Total', dataIndex: 'total', key: 'total', fixed: 'right' },
     { title: 'Ação', key: 'operation', fixed: 'right' },
   ];
-</script>   
+</script>  
 
 <style>
 
   .adiciona-button{
     margin-right: 5px;
   }
+  
 </style>

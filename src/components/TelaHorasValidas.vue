@@ -2,7 +2,7 @@
     <a-layout :style="{ minHeight: '100vh', position: 'relative'}">
   
       <a-layout-header 
-        :style="{ position: 'fixed', zIndex: 1, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 20px' }"
+        :style="{ position: 'fixed', zIndex: 1000, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 20px', top: 0}"
       >
         <div style="display: flex; align-items: center;">
           <img src="/casa-logo.jpg" alt="Logo" style="margin-right: 10px; height: 40px;" /> 

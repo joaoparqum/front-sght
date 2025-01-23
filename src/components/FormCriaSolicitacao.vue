@@ -35,9 +35,11 @@
         <a-form-item
            label="Comprovação"
            name="comprovante"
+           required
         >
           <a-upload
             :before-upload="handleFileUpload"
+            :on-remove="handleRemove"
             :max-count="1"
             :show-upload-list="true"
             :file-list="fileList"
@@ -76,7 +78,7 @@
   import { reactive, ref } from 'vue';
   import { useStore } from 'vuex';
   import { useRouter } from 'vue-router';
-  import { message, type UploadFile } from 'ant-design-vue';
+  import { message } from 'ant-design-vue';
   import { UploadOutlined } from '@ant-design/icons-vue';
   import { format } from 'date-fns';
   
@@ -111,6 +113,11 @@
     formState.comprovante = file;
     fileList.value = [file];
     return false; // Impede o upload automático
+  };
+
+  const handleRemove = (file: File) => {
+    formState.comprovante = null;
+    fileList.value = fileList.value.filter(f => f !== file);
   };
   
   // Função chamada no envio bem-sucedido do formulário
