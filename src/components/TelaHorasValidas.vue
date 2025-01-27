@@ -69,16 +69,15 @@
     import { useRouter } from 'vue-router';
     import { LogoutOutlined } from '@ant-design/icons-vue';
     import { computed, onMounted, ref } from 'vue';
-    import { Dayjs } from 'dayjs';
     import TabelaHoras from './TabelaHoras.vue';
 
     const router = useRouter();
     const store = useStore();
     const username = ref<string | null>(null);
     const currentYear = ref(new Date().getFullYear());
-    const value = ref<Dayjs>();
+    //const value = ref<Dayjs>();
     const novasSolicitacoes = computed(() => store.state.novasSolicitacoes || []);
-    const formatDate = (date: string) => new Date(date).toLocaleString();
+    //const formatDate = (date: string) => new Date(date).toLocaleString();
 
     onMounted(() => {
         username.value = localStorage.getItem('login');
@@ -102,9 +101,9 @@
         }
     };*/
 
-    const onPanelChange = (value: Dayjs, mode: string) => {
+    /*const onPanelChange = (value: Dayjs, mode: string) => {
       console.log(value, mode);
-    };
+    };*/
 
     const fazerLogout = () => {
       store.dispatch('logout');
@@ -114,18 +113,6 @@
       setTimeout(() => {
           router.push('/');
       }, 2000);
-    }
-
-    const navegarParaTabelaSolicitacao = () => {
-        router.push('/TelaSolicitacao');
-    };
-
-    const navegarParaTabelaHoras = () => {
-      router.push('/TelaHorasValidas');
-    }
-
-    const navegarParaCadastroUser = () => {
-      router.push('/CriaUsuario');
     }
 
     /*const isAdmin = computed(() => {

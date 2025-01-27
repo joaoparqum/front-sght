@@ -74,7 +74,7 @@
 </template>
   
 <script lang="ts" setup>
-  import { computed, onMounted, reactive, ref, type Ref } from 'vue';
+  import { computed, onMounted, ref } from 'vue';
   import { message, type TableColumnsType } from 'ant-design-vue';
   import { DeleteOutlined, EditOutlined, FileAddOutlined, SwapLeftOutlined } from '@ant-design/icons-vue';
   import { useRouter } from 'vue-router';
@@ -104,7 +104,6 @@
     maio: '',
     junho: '',
   });
-  const updatedData = { ...formData.value };
 
   const navegarParaAdicionarHoraValida = () => {
     router.push('/CriaHoraValida');

@@ -22,7 +22,7 @@
       <a-table 
         :columns="columns" 
         :data-source="data" 
-        :row-key="record => record.id" 
+        row-key="name" 
         :pagination="{ pageSize: 6 }"
       >
         <template #bodyCell="{ column, record }">
@@ -91,7 +91,6 @@
       comprovante: '',
       horasSolicitadas: '',
     });
-    const updatedData = { ...formData.value };
 
     // Router e Store
     const router = useRouter();

@@ -19,19 +19,21 @@
       <br /><br />
   
       <!-- Tabela -->
-      <a-table 
-        :columns="columns" 
-        :data-source="data" 
-        :row-key="record => record.id" 
+      <a-table
+        :columns="columns"
+        :data-source="data"
+        row-key="name"
         :pagination="{ pageSize: 8 }"
       >
-        <template #bodyCell="{ column, record }">
+        <template #bodyCell="{ column, record }: { column: any; record: Solicitacao }">
           <template v-if="column.key === 'data'">
             <span>{{ formatDate(record.data) }}</span>
           </template>
 
           <template v-if="column.key === 'comprovante'">
-            <a @click="openDocumentByName(record.comprovante.id)">{{ record.comprovante.nomeArquivo }}</a>
+            <a @click="openDocumentByName(record.comprovante.id)">
+              {{ record.comprovante.nomeArquivo }}
+            </a>
           </template>
 
           <template v-else-if="column.key === 'status'">
@@ -39,30 +41,30 @@
               {{ record.status }}
             </a-tag>
           </template>
+
           <template v-else-if="column.key === 'action'">
-            <a-button 
-              type="primary" 
-              size="small" 
+            <a-button
+              type="primary"
+              size="small"
               @click="aprovarSolicitacao(record.id)"
               class="aproved-button"
             >
               Aprovar
             </a-button>
             <a-divider type="vertical" />
-              <a-button 
-                type="primary" 
-                size="small" 
-                @click="rejeitarSolicitacao(record.id)"
-                class="rejected-button"
-              >
-                Rejeitar
-              </a-button>
-            
+            <a-button
+              type="primary"
+              size="small"
+              @click="rejeitarSolicitacao(record.id)"
+              class="rejected-button"
+            >
+              Rejeitar
+            </a-button>
           </template>
         </template>
       </a-table>
     </div>
-  </template>
+</template>
   
 <script lang="ts" setup>
     import { ref, computed, onMounted, watch } from 'vue';
@@ -77,10 +79,20 @@
     
     // Campos de pesquisa e dados
     const searchTerm = ref('');
-    const data = computed(() => store.state.solicitacoes);
+    const data = computed<Solicitacao[]>(() => store.state.solicitacoes);
     
-    // Verificar se o usuário é admin
-    const isAdmin = computed(() => localStorage.getItem('role') === 'admin');
+    interface Solicitacao {
+      id: number;
+      userLogin: string;
+      data: string; // ou Date, se for um objeto Date
+      motivo: string;
+      comprovante: {
+        id: string;
+        nomeArquivo: string;
+      };
+      horasSolicitadas: number;
+      status: string;
+    }
 
     const openDocumentByName = async (documentId: string) => {
       message.loading({ content: 'Carregando documento...' });
@@ -101,10 +113,6 @@
     // Funções auxiliares
     const navegarParaHomescreen = () => {
         router.push('/HomeScreen');
-    };
-    
-    const cadastrarUsuario = () => {
-        router.push('/TelaCriaUsuario');
     };
 
     // Funções para alterar status
@@ -163,20 +171,6 @@
         }
     };
     
-    // Ações
-    const editarSolicitacao = (id: number) => {
-        router.push(`/VisualizarSolicitacao/${id}`);
-    };
-    
-    const deleteSolicitacao = async (id: number) => {
-        try {
-            await store.dispatch('deleteSolicitacao', id);
-            message.success('Solicitação deletada com sucesso!');
-        } catch {
-            message.error('Erro ao deletar a solicitação.');
-        }
-    };
-    
     // Carregar dados na montagem do componente
     onMounted(() => {
         store.dispatch('fetchSolicitacoes');
@@ -188,9 +182,16 @@
           store.dispatch('fetchSolicitacoes');
         }
     });
+
+    interface Column {
+      title: string;
+      dataIndex: string;
+      key: string;
+      width?: number;
+    }
     
     // Configuração das colunas
-    const columns = [
+    const columns: Column[] = [
         {
             title: 'ID',
             dataIndex: 'id',
@@ -235,6 +236,7 @@
         },
         {
             title: 'Ação',
+            dataIndex: 'action',
             key: 'action',
             width: 300,
         },

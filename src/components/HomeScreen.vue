@@ -106,7 +106,6 @@
     const currentYear = ref(new Date().getFullYear());
     const value = ref<Dayjs>();
     const novasSolicitacoes = computed(() => store.state.novasSolicitacoes || []);
-    const formatDate = (date: string) => new Date(date).toLocaleString();
 
     onMounted(() => {
         username.value = localStorage.getItem('login');
