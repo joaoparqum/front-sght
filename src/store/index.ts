@@ -75,7 +75,7 @@ const store = createStore({
             { username, password }: { username: string; password: string }) 
         {
             try {
-                const response = await axios.post('http://localhost:8080/auth/login', {
+                const response = await axios.post('http://24.144.93.247/sght/api/sght/auth/login', {
                     login: username,
                     password: password,
                 });
@@ -91,7 +91,6 @@ const store = createStore({
                 localStorage.setItem('role', role);
                 localStorage.setItem('login', login);
 
-                console.log('token:', token);
                 console.log('role:', role);
                 console.log('login:', login);
 
@@ -116,7 +115,7 @@ const store = createStore({
             userData: any) 
         {
             try {
-                const response = await axios.post('http://localhost:8080/auth/register', userData);
+                const response = await axios.post('http://24.144.93.247/sght/api/sght/auth/register', userData);
                 console.log('Usuário cadastrado com sucesso:', response.data);
                 message.success('Usuário cadastrado com sucesso!');
                 commit('setUser', userData);
@@ -128,7 +127,7 @@ const store = createStore({
         async fetchSolicitacoes({ commit }: { state: State; commit: (mutation: string, payload?: any) => void }) {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get('http://localhost:8080/solicitacoes', {
+                const response = await axios.get('http://24.144.93.247/sght/api/sght/solicitacoes', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -142,7 +141,7 @@ const store = createStore({
         async fetchSolicitacoesByUser({ commit }: { state: State; commit: (mutation: string, payload?: any) => void }) {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get('http://localhost:8080/solicitacoes/user', {
+                const response = await axios.get('http://24.144.93.247/sght/api/sght/solicitacoes/user', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -159,7 +158,7 @@ const store = createStore({
         {
             try {
                 const token = localStorage.getItem('token');
-                await axios.delete(`http://localhost:8080/solicitacoes/${id}`, {
+                await axios.delete(`http://24.144.93.247/sght/api/sght/solicitacoes/${id}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`,
                     },
@@ -186,7 +185,7 @@ const store = createStore({
               console.log(formData.get('comprovante'));  
 
               // Envia a solicitação com FormData
-              await axios.post(`http://localhost:8080/solicitacoes`, formData,
+              await axios.post(`http://24.144.93.247/sght/api/sght/solicitacoes`, formData,
                 {
                   headers: {
                     'Authorization': `Bearer ${token}`, // Inclui o token no cabeçalho
@@ -206,7 +205,7 @@ const store = createStore({
         }) {
             try{
                 const token = localStorage.getItem('token');
-                await axios.post(`http://localhost:8080/horas`, 
+                await axios.post(`http://24.144.93.247/sght/api/sght/horas`, 
                 {
                     nomeColaborador: horas.nomeColaborador,
                     filial: horas.filial,
@@ -235,7 +234,7 @@ const store = createStore({
         async fetchHoras ({ commit }: { state: State; commit: (mutation: string, payload?: any) => void }) {
             try{
                 const token = localStorage.getItem('token');
-                const response = await axios.get(`http://localhost:8080/horas`, {
+                const response = await axios.get(`http://24.144.93.247/sght/api/sght/horas`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -251,7 +250,7 @@ const store = createStore({
         {
             try{
                 const token = localStorage.getItem('token');
-                await axios.delete(`http://localhost:8080/horas/${id}`, {
+                await axios.delete(`http://24.144.93.247/sght/api/sght/horas/${id}`, {
                     headers: {
                         'Authorization': `Bearer ${token}`
                     }
@@ -267,7 +266,7 @@ const store = createStore({
         {
             try {
               const token = localStorage.getItem('token');
-              const response = await axios.get(`http://localhost:8080/horas/nome/${nomeColaborador}`, {
+              const response = await axios.get(`http://24.144.93.247/sght/api/sght/horas/nome/${nomeColaborador}`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -283,7 +282,7 @@ const store = createStore({
         {
             try {
               const token = localStorage.getItem('token');
-              const response = await axios.get(`http://localhost:8080/solicitacoes/nome/${login}`, {
+              const response = await axios.get(`http://24.144.93.247/sght/api/sght/solicitacoes/nome/${login}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -299,7 +298,7 @@ const store = createStore({
         {
             try {
               const token = localStorage.getItem('token');
-              const response = await axios.get(`http://localhost:8080/solicitacoes/motivo/${motivo}`, {
+              const response = await axios.get(`http://24.144.93.247/sght/api/sght/solicitacoes/motivo/${motivo}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -316,7 +315,7 @@ const store = createStore({
             try {
                 const token = localStorage.getItem('token');
                 await axios.patch(
-                    `http://localhost:8080/solicitacoes/${id}/status`, null, 
+                    `http://24.144.93.247/sght/api/sght/solicitacoes/${id}/status`, null, 
                     {
                         headers: {
                             'Authorization': `Bearer ${token}`,
@@ -333,7 +332,7 @@ const store = createStore({
         },
         async fetchNovasSolicitacoes({ commit }: any) {
             const token = localStorage.getItem('token');
-            const response = await axios.get('http://localhost:8080/solicitacoes/nao-vistas', {
+            const response = await axios.get('http://24.144.93.247/sght/api/sght/solicitacoes/nao-vistas', {
                 headers: { 'Authorization': `Bearer ${token}` },
             });
             commit('setNovasSolicitacoes', response.data);
@@ -341,7 +340,7 @@ const store = createStore({
         async marcarNotificacoesComoVistas({ dispatch }: any) {
             try {
                 const token = localStorage.getItem('token');
-                await axios.put('http://localhost:8080/solicitacoes/marcar-vistas', {}, {
+                await axios.put('http://24.144.93.247/sght/api/sght/solicitacoes/marcar-vistas', {}, {
                     headers: { 'Authorization': `Bearer ${token}` },
                 });
                 // Atualiza a lista de notificações após marcar como vistas
@@ -358,7 +357,7 @@ const store = createStore({
                     throw new Error('Token não encontrado. Faça login novamente.');
                 }
 
-                await axios.patch(`http://localhost:8080/solicitacoes/${payload.id}`, payload.updatedData, {
+                await axios.patch(`http://24.144.93.247/sght/api/sght/solicitacoes/${payload.id}`, payload.updatedData, {
                     headers: { Authorization: `Bearer ${token}`},
                 });
                 dispatch('fetchSolicitacoesByUser');
@@ -376,7 +375,7 @@ const store = createStore({
                     throw new Error('Token não encontrado. Faça login novamente.');
                 }
             
-                await axios.patch(`http://localhost:8080/horas/${payload.id}`, payload.updatedData,{
+                await axios.patch(`http://24.144.93.247/sght/api/sght/horas/${payload.id}`, payload.updatedData,{
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 
@@ -391,7 +390,7 @@ const store = createStore({
         payload: any) {
             try {
                 const token = localStorage.getItem('token');
-                const response = await axios.get(`http://localhost:8080/solicitacoes/${payload.id}`, {
+                const response = await axios.get(`http://24.144.93.247/sght/api/sght/solicitacoes/${payload.id}`, {
                     headers: { 'Authorization': `Bearer ${token}` },
                 });
                 return response.data;
@@ -409,7 +408,7 @@ const store = createStore({
                 throw new Error('Token não encontrado. Faça login novamente.');
               }
           
-              const response = await axios.get(`http://localhost:8080/horas/${payload.id}`, {
+              const response = await axios.get(`http://24.144.93.247/sght/api/sght/horas/${payload.id}`, {
                 headers: { Authorization: `Bearer ${token}` }  // Corrigido "Authorizarion" para "Authorization"
               });
           
@@ -425,7 +424,7 @@ const store = createStore({
         {
             try {
               const token = localStorage.getItem('token');  
-              const response = await axios.get(`http://localhost:8080/comprovante/view/${DocumentCode}`, {
+              const response = await axios.get(`http://24.144.93.247/sght/api/sght/comprovante/view/${DocumentCode}`, {
                 responseType: 'blob', 
                 headers: { 
                     Authorization: `Bearer ${token}`

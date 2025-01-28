@@ -21,7 +21,7 @@
         </div>
       </a-layout-header>
 
-      <a-layout-content :style="{ padding: '0 50px', marginTop: '64px' }">
+      <a-layout-content :style="{ padding: '0 20px', marginTop: '64px' }">
         <a-breadcrumb :style="{ margin: '16px 0' }">
         </a-breadcrumb>
         <div :style="{ background: '#fff', padding: '24px', minHeight: '790px' }">

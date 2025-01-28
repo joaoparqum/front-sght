@@ -24,6 +24,7 @@
         :data-source="data" 
         row-key="name" 
         :pagination="{ pageSize: 6 }"
+        :scroll="{ x: 1500, y: 500 }"
       >
         <template #bodyCell="{ column, record }">
           <template v-if="column.key === 'data'">

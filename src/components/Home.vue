@@ -11,7 +11,7 @@
       :style="{ position: 'fixed', zIndex: 1, width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 20px' }"
     >
       <img src="/casa-logo.jpg" alt="Logo" style="margin-right: 10px; height: 40px;" />
-      <h1 style="color: white; margin: 0;">Sistema de Gerenciamento de Horas Trabalhadas</h1>
+      <h1 style="color: white; margin: 0;">SGHT</h1>
     </a-layout-header>
 
     <a-layout-content :style="{ display:'flex', justifyContent:'center', alignItems: 'center', marginTop: '50px' }">
